@@ -10,7 +10,7 @@ public class ClassroomManager : MonoBehaviour
         Animator[] animators = transform.GetComponentsInChildren<Animator>();
         foreach (Animator animator in animators)
         {
-            animator.SetLayerWeight(GameObject.Find("Settings").GetComponent<Settings>().ClassroomDifficulty, 1);
+            animator.GetParameter(GameObject.Find("Settings").GetComponent<Settings>().ClassroomDifficulty).defaultBool = true;
         }
     }
 
