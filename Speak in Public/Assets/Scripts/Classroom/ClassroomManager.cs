@@ -9,7 +9,7 @@ public class ClassroomManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Animator[] people = GameObject.Find("Public").GetComponentsInChildren<Animator>();
+        Animator[] people = transform.GetComponentsInChildren<Animator>();
         System.Random rnd = new System.Random();
         Animator[] peopleRnd = people.OrderBy(x => rnd.Next()).ToArray();
         for (int i = 0; i < 8 - GameObject.Find("Settings").GetComponent<Settings>().NumberOfPeople; i++)
@@ -17,8 +17,7 @@ public class ClassroomManager : MonoBehaviour
             peopleRnd[i].gameObject.SetActive(false);
         }
 
-        Animator[] animators = transform.GetComponentsInChildren<Animator>();
-        foreach (Animator animator in animators)
+        foreach (Animator animator in people)
         {
             animator.SetBool(animator.GetParameter(GameObject.Find("Settings").GetComponent<Settings>().ClassroomDifficulty).nameHash, true);
         }
