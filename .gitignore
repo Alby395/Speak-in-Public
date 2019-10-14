@@ -34,3 +34,9 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+
+
+# Other
+Speak in Public/Assets/TextMesh Pro/
+Speak in Public/Assets/TextMesh Pro.meta
