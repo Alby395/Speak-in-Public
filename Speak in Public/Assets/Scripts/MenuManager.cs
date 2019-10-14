@@ -17,7 +17,7 @@ public class MenuManager : MonoBehaviour
         
     }
 
-    public void LaunchActivity(int ActivityNumber)
+    public void LoadActivity(int ActivityNumber)
     {
         SceneManager.LoadScene(ActivityNumber);
     }
