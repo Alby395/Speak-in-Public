@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ClassroomDifficulty: 1
+  NumberOfPeople: 5
 --- !u!4 &74170533
 Transform:
   m_ObjectHideFlags: 0

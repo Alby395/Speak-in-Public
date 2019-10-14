@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Settings : MonoBehaviour
 {
-    public int ClassroomDifficulty; 
+    public int ClassroomDifficulty;
+    public int NumberOfPeople;
 
     // Start is called before the first frame update
     void Start()
