@@ -53,6 +53,11 @@ public class MicrophoneManager : MonoBehaviour
         // levelMax equals to the highest normalized value power 2, a small number because < 1
         // pass the value to a static var so we can access it from anywhere
         MicLoudness = LevelMax();
+
+        if (MicLoudness > 0.0001f)
+        {
+            GameObject.Find("Public").GetComponent<ClassroomManager>().DetectSpeech();
+        } 
     }
 
     bool _isInitialized;

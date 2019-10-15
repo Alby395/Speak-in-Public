@@ -6,15 +6,17 @@ using System.Linq;
 
 public class ClassroomManager : MonoBehaviour
 {
+    private List<Animator> people;
+
     // Start is called before the first frame update
     void Start()
     {
-        Animator[] people = transform.GetComponentsInChildren<Animator>();
         System.Random rnd = new System.Random();
-        Animator[] peopleRnd = people.OrderBy(x => rnd.Next()).ToArray();
+        people = transform.GetComponentsInChildren<Animator>().OrderBy(x => rnd.Next()).ToList();
         for (int i = 0; i < 8 - GameObject.Find("Settings").GetComponent<Settings>().NumberOfPeople; i++)
         {
-            Destroy(peopleRnd[i].gameObject);
+            Destroy(people[i].gameObject);
+            people.RemoveAt(i);
         }
 
         foreach (Animator animator in people)
@@ -27,5 +29,14 @@ public class ClassroomManager : MonoBehaviour
     void Update()
     {
 
+    }
+
+
+    public void DetectSpeech()
+    {
+        foreach (Animator animator in people)
+        {
+            animator.SetTrigger("SpeechDetected");
+        }
     }
 }
