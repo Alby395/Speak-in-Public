@@ -24,7 +24,7 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene(ActivityNumber);
         if (ActivityNumber != 0)
         {
-            StartCoroutine(LoadDevice("Daydream", true));
+            StartCoroutine(LoadDevice("daydream", true));
         }
         else
         {
