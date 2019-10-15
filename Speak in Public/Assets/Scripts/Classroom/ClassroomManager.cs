@@ -14,7 +14,7 @@ public class ClassroomManager : MonoBehaviour
         Animator[] peopleRnd = people.OrderBy(x => rnd.Next()).ToArray();
         for (int i = 0; i < 8 - GameObject.Find("Settings").GetComponent<Settings>().NumberOfPeople; i++)
         {
-            peopleRnd[i].gameObject.SetActive(false);
+            Destroy(peopleRnd[i].gameObject);
         }
 
         foreach (Animator animator in people)
