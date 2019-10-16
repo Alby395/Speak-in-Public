@@ -7,7 +7,7 @@ public class RandomTransition : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.SetInteger("Random", new System.Random().Next(0,2));
+        animator.SetInteger("Random", new System.Random().Next(0,animator.GetInteger("NumberOfStates")));
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
