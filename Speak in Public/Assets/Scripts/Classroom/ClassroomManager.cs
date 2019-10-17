@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
+using UnityEngine.XR;
 
 public class ClassroomManager : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class ClassroomManager : MonoBehaviour
         {
             animator.SetBool(animator.GetParameter(GameObject.Find("Settings").GetComponent<Settings>().ClassroomDifficulty).nameHash, true);
         }
+
+        StartCoroutine(LoadDevice("cardboard", true));
     }
 
     // Update is called once per frame
@@ -37,6 +40,16 @@ public class ClassroomManager : MonoBehaviour
         foreach (Animator animator in people)
         {
             animator.SetTrigger("SpeechDetected");
+        }
+    }
+
+    private IEnumerator LoadDevice(string newDevice, bool enable)
+    {
+        if (string.Compare(XRSettings.loadedDeviceName, newDevice, true) != 0)
+        {
+            XRSettings.LoadDeviceByName(newDevice);
+            yield return null;
+            XRSettings.enabled = enable;
         }
     }
 }

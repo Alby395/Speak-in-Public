@@ -10,7 +10,7 @@ public class MenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartCoroutine(LoadDevice("", false));
     }
 
     // Update is called once per frame
@@ -22,14 +22,6 @@ public class MenuManager : MonoBehaviour
     public void LoadActivity(int ActivityNumber)
     {
         SceneManager.LoadScene(ActivityNumber);
-        if (ActivityNumber != 0)
-        {
-            StartCoroutine(LoadDevice("daydream", true));
-        }
-        else
-        {
-            StartCoroutine(LoadDevice("", false));
-        }
     }
 
     private IEnumerator LoadDevice(string newDevice, bool enable)
@@ -37,7 +29,7 @@ public class MenuManager : MonoBehaviour
         if (string.Compare(XRSettings.loadedDeviceName, newDevice, true) != 0)
         {
             XRSettings.LoadDeviceByName(newDevice);
-            yield return new WaitForEndOfFrame();
+            yield return null;
             XRSettings.enabled = enable;
         }
     }
