@@ -2,12 +2,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Android;
 using UnityEngine.Audio;
 
 public class MicrophoneManager : MonoBehaviour
 {
     public static float MicLoudness;
     private string _device;
+
+    private void Start()
+    {
+
+    }
+
+    private IEnumerator AskForMicPermission()
+    {
+        //while (!Application.HasUserAuthorization(UserAuthorization.Microphone))
+        {
+            yield return Application.RequestUserAuthorization(UserAuthorization.Microphone);
+        }   
+    }
 
     //mic initialization
     void InitMic()
