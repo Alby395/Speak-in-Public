@@ -39,7 +39,10 @@ public class ClassroomManager : MonoBehaviour
     {
         foreach (Animator animator in people)
         {
-            animator.SetTrigger("SpeechDetected");
+            if (animator.GetCurrentAnimatorStateInfo(0).ToString() != "Sitting Idle")
+            {
+                animator.SetTrigger("SpeechDetected");
+            }
         }
     }
 

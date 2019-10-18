@@ -68,7 +68,7 @@ public class MicrophoneManager : MonoBehaviour
         // pass the value to a static var so we can access it from anywhere
         MicLoudness = LevelMax();
 
-        if (MicLoudness > 0.01f)
+        if (MicLoudness > 0.1f)
         {
             Debug.Log(MicLoudness);
             GameObject.Find("Public").GetComponent<ClassroomManager>().DetectSpeech();
