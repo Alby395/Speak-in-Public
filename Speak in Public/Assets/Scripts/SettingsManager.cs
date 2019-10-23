@@ -18,22 +18,22 @@ public class SettingsManager : MonoBehaviour
 
     public void EasySettings()
     {
-        GameObject.Find("Settings").GetComponent<Settings>().ClassroomDifficulty = 0;
-        GameObject.Find("Settings").GetComponent<Settings>().NumberOfPeople = 4;
-        GameObject.Find("Settings").GetComponent<Settings>().MicrophoneEnabled = true;
+        GameObject.Find("ActivitySettings").GetComponent<Settings>().NumberOfPeople = 4;
+        GameObject.Find("ActivitySettings").GetComponent<Settings>().PercentageOfDistractedPeople = 1;
+        GameObject.Find("ActivitySettings").GetComponent<Settings>().MicrophoneEnabled = true;
     }
 
     public void RegularSettings()
     {
-        GameObject.Find("Settings").GetComponent<Settings>().ClassroomDifficulty = 1;
-        GameObject.Find("Settings").GetComponent<Settings>().NumberOfPeople = 6;
-        GameObject.Find("Settings").GetComponent<Settings>().MicrophoneEnabled = true;
+        GameObject.Find("ActivitySettings").GetComponent<Settings>().NumberOfPeople = 6;
+        GameObject.Find("ActivitySettings").GetComponent<Settings>().PercentageOfDistractedPeople = 1;
+        GameObject.Find("ActivitySettings").GetComponent<Settings>().MicrophoneEnabled = true;
     }
 
     public void DifficultSettings()
     {
-        GameObject.Find("Settings").GetComponent<Settings>().ClassroomDifficulty = 1;
-        GameObject.Find("Settings").GetComponent<Settings>().NumberOfPeople = 8;
-        GameObject.Find("Settings").GetComponent<Settings>().MicrophoneEnabled = false;
+        GameObject.Find("ActivitySettings").GetComponent<Settings>().NumberOfPeople = 8;
+        GameObject.Find("ActivitySettings").GetComponent<Settings>().PercentageOfDistractedPeople = 1;
+        GameObject.Find("ActivitySettings").GetComponent<Settings>().MicrophoneEnabled = true;
     }
 }

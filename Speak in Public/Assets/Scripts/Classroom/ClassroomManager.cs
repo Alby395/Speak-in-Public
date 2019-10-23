@@ -14,7 +14,7 @@ public class ClassroomManager : MonoBehaviour
     {
         System.Random rnd = new System.Random();
         people = transform.GetComponentsInChildren<Animator>().OrderBy(x => rnd.Next()).ToList();
-        for (int i = 0; i < 8 - GameObject.Find("Settings").GetComponent<Settings>().NumberOfPeople; i++)
+        for (int i = 0; i < 8 - GameObject.Find("ActivitySettings").GetComponent<Settings>().NumberOfPeople; i++)
         {
             Destroy(people[i].gameObject);
             people.RemoveAt(i);
@@ -22,7 +22,7 @@ public class ClassroomManager : MonoBehaviour
 
         foreach (Animator animator in people)
         {
-            animator.SetBool(animator.GetParameter(GameObject.Find("Settings").GetComponent<Settings>().ClassroomDifficulty).nameHash, true);
+            animator.SetBool(animator.GetParameter((int)GameObject.Find("ActivitySettings").GetComponent<Settings>().PercentageOfDistractedPeople).nameHash, true);
         }
 
         StartCoroutine(LoadDevice("cardboard", true));

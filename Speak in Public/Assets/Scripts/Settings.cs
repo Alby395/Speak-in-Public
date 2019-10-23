@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Settings : MonoBehaviour
 {
-    public int ClassroomDifficulty;
     public int NumberOfPeople;
+    public float PercentageOfDistractedPeople;
     public bool MicrophoneEnabled;
 
     // Start is called before the first frame update
