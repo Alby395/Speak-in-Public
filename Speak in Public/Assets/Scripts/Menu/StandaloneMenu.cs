@@ -7,8 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class StandaloneMenu : MonoBehaviour
 {
-    public GameObject MainMenu;
-    public GameObject Settings;
 
     private void Start()
     {
@@ -18,18 +16,6 @@ public class StandaloneMenu : MonoBehaviour
             Permission.RequestUserPermission(Permission.Microphone);
         }
 #endif
-    }
-
-    public void ShowMainMenu()
-    {
-        MainMenu.SetActive(true);
-        Settings.SetActive(false);
-    }
-
-    public void ShowSettings()
-    {
-        MainMenu.SetActive(false);
-        Settings.SetActive(true);
     }
 
     public void StartGame()

@@ -4,25 +4,41 @@ using UnityEngine;
 using System;
 using System.Linq;
 using UnityEngine.XR;
+using UnityEditor;
 
 public class ClassroomManager : MonoBehaviour
 {
-    private List<Animator> people;
+    public int NumberOfPeople;
+    public float PercentageOfDistractedPeople;
+    public bool MicrophoneEnabled;
+
+    public GameObject people;
+    private List<Animator> animators;
+
+    private void Awake()
+    {
+        if (!EditorApplication.isPlaying)
+        {
+            NumberOfPeople = PlayerPrefs.GetInt("NumberOfPeople");
+            PercentageOfDistractedPeople = Mathf.FloorToInt(PlayerPrefs.GetInt("NumberOfPeople") * PlayerPrefs.GetInt("PercentageOfDistractedPeople"));
+            MicrophoneEnabled = (PlayerPrefs.GetInt("MicrophoneEnabled") == 0) ? false : true;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         System.Random rnd = new System.Random();
-        people = transform.GetComponentsInChildren<Animator>().OrderBy(x => rnd.Next()).ToList();
-        for (int i = 0; i < 8 - GameObject.Find("ActivitySettings").GetComponent<Settings>().NumberOfPeople; i++)
+        animators = people.GetComponentsInChildren<Animator>().OrderBy(x => rnd.Next()).ToList();
+        for (int i = 0; i < 8 - NumberOfPeople; i++)
         {
-            Destroy(people[i].gameObject);
-            people.RemoveAt(i);
+            Destroy(animators[i].gameObject);
+            animators.RemoveAt(i);
         }
 
-        foreach (Animator animator in people)
+        foreach (Animator animator in animators)
         {
-            animator.SetBool(animator.GetParameter((int)GameObject.Find("ActivitySettings").GetComponent<Settings>().PercentageOfDistractedPeople).nameHash, true);
+            animator.SetBool("Difficult", true);
         }
 
         StartCoroutine(LoadDevice("cardboard", true));
@@ -37,12 +53,9 @@ public class ClassroomManager : MonoBehaviour
 
     public void DetectSpeech()
     {
-        foreach (Animator animator in people)
+        foreach (Animator animator in animators)
         {
-            if (animator.GetCurrentAnimatorStateInfo(0).ToString() != "Sitting Idle")
-            {
-                animator.SetTrigger("SpeechDetected");
-            }
+            animator.SetTrigger("SpeechDetected");
         }
     }
 
