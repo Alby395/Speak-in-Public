@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.SceneManagement;
 
-public class MainCanvas : MonoBehaviour
+public class TWBMenu : MonoBehaviour
 {
     public GameObject MainMenu;
     public GameObject Settings;
