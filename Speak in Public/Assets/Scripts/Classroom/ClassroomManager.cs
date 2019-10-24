@@ -29,6 +29,8 @@ public class ClassroomManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.instance.EnableVR();
+
         System.Random rnd = new System.Random();
         animators = people.GetComponentsInChildren<Animator>().OrderBy(x => rnd.Next()).ToList();
         for (int i = 0; i < 8 - NumberOfPeople; i++)
@@ -44,7 +46,6 @@ public class ClassroomManager : MonoBehaviour
             animators[i].SetBool("Difficult", true);
         }
 
-        GameManager.instance.EnableVR();
     }
 
     // Update is called once per frame
