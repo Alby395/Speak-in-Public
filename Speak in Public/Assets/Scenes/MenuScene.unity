@@ -3053,6 +3053,7 @@ GameObject:
   m_Component:
   - component: {fileID: 985985757}
   - component: {fileID: 985985758}
+  - component: {fileID: 985985759}
   m_Layer: 5
   m_Name: MicrophoneConfiguration
   m_TagString: Untagged
@@ -3128,6 +3129,21 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 1
+--- !u!114 &985985759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985985756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b6728e6ac490a46a96590dba89fe82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameter: 
+  value: {fileID: 0}
+  defaultValue: 0
 --- !u!1 &1135861170
 GameObject:
   m_ObjectHideFlags: 0

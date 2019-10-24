@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
 
     public void EnableVR()
     {
-        StartCoroutine(LoadDevice("daydream", true));
+        StartCoroutine(LoadDevice("cardboard", true));
     }
 
     public void DisableVR()
