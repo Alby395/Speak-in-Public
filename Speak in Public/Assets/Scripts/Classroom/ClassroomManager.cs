@@ -8,31 +8,27 @@ using UnityEditor;
 
 public class ClassroomManager : MonoBehaviour
 {
-    public int NumberOfPeople;
-    public float PercentageOfDistractedPeople;
-    public bool MicrophoneEnabled;
+    private int NumberOfPeople;
+    private float PercentageOfDistractedPeople;
+    private bool MicrophoneEnabled;
 
     public GameObject people;
     private List<Animator> animators;
 
     private void Awake()
     {
-        PercentageOfDistractedPeople = Mathf.FloorToInt(NumberOfPeople * PercentageOfDistractedPeople / 100);
-#if !UNITY_EDITOR
         NumberOfPeople = PlayerPrefs.GetInt("NumberOfPeople");
-        PercentageOfDistractedPeople = Mathf.FloorToInt(PlayerPrefs.GetInt("NumberOfPeople") * PlayerPrefs.GetInt("PercentageOfDistractedPeople")/100);
+        PercentageOfDistractedPeople = Mathf.FloorToInt(PlayerPrefs.GetInt("NumberOfPeople") * PlayerPrefs.GetInt("PercentageOfDistractedPeople") / 100);
         MicrophoneEnabled = (PlayerPrefs.GetInt("MicrophoneEnabled") == 0) ? false : true;
-#endif
+
+        Debug.Log(NumberOfPeople);
+        Debug.Log(PercentageOfDistractedPeople);
+        Debug.Log(MicrophoneEnabled);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(NumberOfPeople);
-        Debug.Log(PercentageOfDistractedPeople);
-        Debug.Log(MicrophoneEnabled);
-
-
         System.Random rnd = new System.Random();
         animators = people.GetComponentsInChildren<Animator>().OrderBy(x => rnd.Next()).ToList();
         for (int i = 0; i < 8 - NumberOfPeople; i++)
