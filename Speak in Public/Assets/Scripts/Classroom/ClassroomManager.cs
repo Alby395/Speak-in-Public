@@ -17,10 +17,11 @@ public class ClassroomManager : MonoBehaviour
 
     private void Awake()
     {
+        PercentageOfDistractedPeople = Mathf.FloorToInt(NumberOfPeople * PercentageOfDistractedPeople / 100);
         if (!EditorApplication.isPlaying)
         {
             NumberOfPeople = PlayerPrefs.GetInt("NumberOfPeople");
-            PercentageOfDistractedPeople = Mathf.FloorToInt(PlayerPrefs.GetInt("NumberOfPeople") * PlayerPrefs.GetInt("PercentageOfDistractedPeople"));
+            PercentageOfDistractedPeople = Mathf.FloorToInt(PlayerPrefs.GetInt("NumberOfPeople") * PlayerPrefs.GetInt("PercentageOfDistractedPeople")/100);
             MicrophoneEnabled = (PlayerPrefs.GetInt("MicrophoneEnabled") == 0) ? false : true;
         }
     }
@@ -36,9 +37,11 @@ public class ClassroomManager : MonoBehaviour
             animators.RemoveAt(i);
         }
 
-        foreach (Animator animator in animators)
+        animators = people.GetComponentsInChildren<Animator>().OrderBy(x => rnd.Next()).ToList();
+        for (int i = 0; i < PercentageOfDistractedPeople; i++)
         {
-            animator.SetBool("Difficult", true);
+            animators[i].SetBool("Easy", false);
+            animators[i].SetBool("Difficult", true);
         }
 
         StartCoroutine(LoadDevice("cardboard", true));

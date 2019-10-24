@@ -347,7 +347,7 @@ AnimatorController:
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
-    m_DefaultBool: 0
+    m_DefaultBool: 1
     m_Controller: {fileID: 9100000}
   - m_Name: Difficult
     m_Type: 4
@@ -433,7 +433,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 127b92580ab345049aa31a9b1f37e47a,
+  m_Motion: {fileID: -203655887218126122, guid: e1ea2566814c0004bab506aa3ed38706,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
