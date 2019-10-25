@@ -20,10 +20,6 @@ public class ClassroomManager : MonoBehaviour
         NumberOfPeople = PlayerPrefs.GetInt("NumberOfPeople");
         PercentageOfDistractedPeople = Mathf.FloorToInt(PlayerPrefs.GetInt("NumberOfPeople") * PlayerPrefs.GetInt("PercentageOfDistractedPeople") / 100);
         MicrophoneEnabled = (PlayerPrefs.GetInt("MicrophoneEnabled") == 0) ? false : true;
-
-        Debug.Log(NumberOfPeople);
-        Debug.Log(PercentageOfDistractedPeople);
-        Debug.Log(MicrophoneEnabled);
     }
 
     // Start is called before the first frame update
@@ -36,7 +32,6 @@ public class ClassroomManager : MonoBehaviour
         for (int i = 0; i < 8 - NumberOfPeople; i++)
         {
             Destroy(animators[i].gameObject);
-            animators.RemoveAt(i);
         }
 
         animators = people.GetComponentsInChildren<Animator>().OrderBy(x => rnd.Next()).ToList();
