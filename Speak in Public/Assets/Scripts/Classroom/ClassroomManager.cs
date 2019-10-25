@@ -37,24 +37,17 @@ public class ClassroomManager : MonoBehaviour
         animators = people.GetComponentsInChildren<Animator>().OrderBy(x => rnd.Next()).ToList();
         for (int i = 0; i < PercentageOfDistractedPeople; i++)
         {
-            animators[i].SetBool("Easy", false);
-            animators[i].SetBool("Difficult", true);
+            animators[i].SetBool("Reactive", true);
         }
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
 
     }
 
 
     public void DetectSpeech()
     {
-        if (MicrophoneEnabled)
+        foreach (Animator animator in animators)
         {
-            foreach (Animator animator in animators)
+            if (animator.GetBool("Reactive") == true && MicrophoneEnabled == true)
             {
                 animator.SetTrigger("SpeechDetected");
             }

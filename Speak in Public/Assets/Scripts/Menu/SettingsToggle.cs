@@ -8,13 +8,12 @@ public class SettingsToggle : MonoBehaviour
 {
     public string parameter;
     public TextMeshProUGUI value;
-    public int defaultValue;
     private UnityEngine.UI.Toggle toggle;
 
     private void Awake()
     {
         toggle = GetComponent<UnityEngine.UI.Toggle>();
-        toggle.isOn = PlayerPrefs.GetInt(parameter, defaultValue) == 0 ? false : true;
+        toggle.isOn = PlayerPrefs.GetInt(parameter) == 0 ? false : true;
         toggle.onValueChanged.AddListener(ValueChange);
     }
 

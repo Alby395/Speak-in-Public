@@ -8,13 +8,12 @@ public class SettingsSlider : MonoBehaviour
 {
     public string parameter;
     public TextMeshProUGUI value;
-    public int defaultValue;
     private UnityEngine.UI.Slider slider;
 
     private void Awake()
     {
         slider = GetComponent<UnityEngine.UI.Slider>();
-        slider.value = PlayerPrefs.GetInt(parameter, defaultValue);
+        slider.value = PlayerPrefs.GetInt(parameter);
         value.text = slider.value.ToString();
         slider.onValueChanged.AddListener(ValueChange);
     }

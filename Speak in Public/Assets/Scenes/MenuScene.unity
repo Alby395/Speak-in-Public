@@ -1021,7 +1021,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parameter: PercentageOfDistractedPeople
   value: {fileID: 2144320001}
-  defaultValue: 50
 --- !u!114 &271603964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1068,7 +1067,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 1
-  m_Value: 1
+  m_Value: 50
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1827,7 +1826,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parameter: NumberOfPeople
   value: {fileID: 97827031}
-  defaultValue: 8
 --- !u!114 &527121258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1874,7 +1872,7 @@ MonoBehaviour:
   m_MinValue: 1
   m_MaxValue: 8
   m_WholeNumbers: 1
-  m_Value: 1
+  m_Value: 8
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3079,7 +3077,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -443, y: -122}
+  m_AnchoredPosition: {x: -443, y: -149}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &985985758
@@ -3143,7 +3141,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parameter: MicrophoneEnabled
   value: {fileID: 0}
-  defaultValue: 0
 --- !u!1 &1135861170
 GameObject:
   m_ObjectHideFlags: 0
