@@ -54,13 +54,4 @@ public class ClassroomManager : MonoBehaviour
         }
     }
 
-    private IEnumerator LoadDevice(string newDevice, bool enable)
-    {
-        if (string.Compare(XRSettings.loadedDeviceName, newDevice, true) != 0)
-        {
-            XRSettings.LoadDeviceByName(newDevice);
-            yield return null;
-            XRSettings.enabled = enable;
-        }
-    }
 }
