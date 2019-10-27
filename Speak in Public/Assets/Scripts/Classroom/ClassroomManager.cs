@@ -40,6 +40,10 @@ public class ClassroomManager : MonoBehaviour
             animators[i].SetBool("Reactive", true);
         }
 
+        if (MicrophoneEnabled)
+        {
+            transform.GetComponent<MicrophoneManager>().enabled = true;
+        }
     }
 
 
@@ -47,11 +51,15 @@ public class ClassroomManager : MonoBehaviour
     {
         foreach (Animator animator in animators)
         {
-            if (animator.GetBool("Reactive") == true && MicrophoneEnabled == true)
-            {
-                animator.SetTrigger("SpeechDetected");
-            }
+            animator.SetTrigger("SpeechDetected");
         }
     }
 
+
+    [Serializable]
+    private class Message
+    {
+        public string type;
+        public string message;
+    }
 }
