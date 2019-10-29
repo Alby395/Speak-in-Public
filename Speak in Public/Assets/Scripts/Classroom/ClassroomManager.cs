@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using UnityEngine.XR;
 using UnityEditor;
+using WebSocketSharp;
 
 public class ClassroomManager : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class ClassroomManager : MonoBehaviour
 
     public GameObject people;
     private List<Animator> animators;
+
+    private delegate void Event();
+    private event Event Consumer;
 
     private void Awake()
     {
@@ -40,9 +44,20 @@ public class ClassroomManager : MonoBehaviour
             animators[i].SetBool("Reactive", true);
         }
 
-        if (MicrophoneEnabled)
+        transform.GetComponent<MicrophoneManager>().enabled = MicrophoneEnabled;
+
+        if (GameManager.instance.TWBenabled && WebSocketManager.instance.GetStatus() == WebSocketState.Open)
         {
-            transform.GetComponent<MicrophoneManager>().enabled = true;
+            WebSocketManager.instance.AddHandlerMessage(MessageHandler);
+        }       
+    }
+
+    private void Update()
+    {
+        Consumer?.Invoke();
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameManager.instance.GoToMenu();
         }
     }
 
@@ -53,6 +68,31 @@ public class ClassroomManager : MonoBehaviour
         {
             animator.SetTrigger("SpeechDetected");
         }
+    }
+
+    private void OnDestroy()
+    {
+        if (GameManager.instance.TWBenabled)
+        {
+            WebSocketManager.instance.RemoveHandlerMessage(MessageHandler);
+        }
+    }
+
+
+    private void MessageHandler(object sender, MessageEventArgs e)
+    {
+        Message msg = JsonUtility.FromJson<Message>(e.Data);
+        print(msg);
+        if (msg.type == "StartCheering")
+        {
+            Consumer += TerminateActivity;
+        }
+    }
+
+    private void TerminateActivity()
+    {
+        EventManager.TriggerEvent("StartCheering");
+        Consumer -= TerminateActivity;
     }
 
 

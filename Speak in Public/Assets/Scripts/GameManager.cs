@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 {
     public int gameId;
 
+    public bool TWBenabled;
+
 
 	public static GameManager instance
 	{
