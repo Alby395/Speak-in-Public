@@ -71,7 +71,7 @@ public class MicrophoneManager : MonoBehaviour
         if (MicLoudness > 0.1f)
         {
             Debug.Log(MicLoudness);
-            transform.GetComponent<ClassroomManager>().DetectSpeech();
+            EventManager.TriggerEvent("SpeechDetected");
         }
     }
 

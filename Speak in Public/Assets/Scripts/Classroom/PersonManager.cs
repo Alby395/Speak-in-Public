@@ -15,11 +15,17 @@ public class PersonManager : MonoBehaviour
     void Start()
     {
         EventManager.StartListening("StartCheering", Cheer);
+        EventManager.StartListening("SpeechDetected", DetectSpeech);
     }
 
     private void OnDestroy()
     {
         EventManager.StopListening("StopCheering", Cheer);
+    }
+
+    void DetectSpeech()
+    {
+        animator.SetTrigger("SpeechDetected");
     }
 
     void Cheer()

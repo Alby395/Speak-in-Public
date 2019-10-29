@@ -2628,6 +2628,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameId: 0
+  TWBenabled: 0
 --- !u!1 &908283673
 GameObject:
   m_ObjectHideFlags: 0

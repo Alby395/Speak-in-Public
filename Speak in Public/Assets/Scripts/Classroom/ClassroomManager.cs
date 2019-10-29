@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine.XR;
 using UnityEditor;
 using WebSocketSharp;
+using UnityEngine.Events;
 
 public class ClassroomManager : MonoBehaviour
 {
@@ -45,6 +46,9 @@ public class ClassroomManager : MonoBehaviour
         }
 
         transform.GetComponent<MicrophoneManager>().enabled = MicrophoneEnabled;
+
+
+        EventManager.StartListening("ReturnToMenu", GameManager.instance.GoToMenu);
 
         if (GameManager.instance.TWBenabled && WebSocketManager.instance.GetStatus() == WebSocketState.Open)
         {
@@ -87,15 +91,39 @@ public class ClassroomManager : MonoBehaviour
         {
             Consumer += TerminateActivity;
         }
+        if (msg.type == "ReturnToMenu")
+        {
+            Consumer += GoToMenu;
+        }
+        else
+        {
+            Debug.Log("Unknown type of message");
+        }
     }
 
     private void TerminateActivity()
     {
         EventManager.TriggerEvent("StartCheering");
         Consumer -= TerminateActivity;
+        if (GameManager.instance.TWBenabled)
+        {
+            StartCoroutine(ActivityTerminated());
+        }
     }
 
+    private IEnumerator ActivityTerminated()
+    {
+        yield return new WaitForSeconds(10f);
+        GameManager.instance.GoToMenu();
+    }
 
+    private void GoToMenu()
+    {
+        EventManager.TriggerEvent("GoToMenu");
+        Consumer -= GoToMenu;
+    }
+
+    
     [Serializable]
     private class Message
     {
