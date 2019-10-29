@@ -13,6 +13,7 @@ public class ClassroomManager : MonoBehaviour
     private int NumberOfPeople;
     private float PercentageOfDistractedPeople;
     private bool MicrophoneEnabled;
+    private int ActivityDuration;
 
     public GameObject people;
     private List<Animator> animators;
@@ -25,6 +26,7 @@ public class ClassroomManager : MonoBehaviour
         NumberOfPeople = PlayerPrefs.GetInt("NumberOfPeople");
         PercentageOfDistractedPeople = Mathf.FloorToInt(PlayerPrefs.GetInt("NumberOfPeople") * PlayerPrefs.GetInt("PercentageOfDistractedPeople") / 100);
         MicrophoneEnabled = (PlayerPrefs.GetInt("MicrophoneEnabled") == 0) ? false : true;
+        ActivityDuration = PlayerPrefs.GetInt("ActivityDuration");
     }
 
     // Start is called before the first frame update
@@ -53,7 +55,13 @@ public class ClassroomManager : MonoBehaviour
         if (GameManager.instance.TWBenabled && WebSocketManager.instance.GetStatus() == WebSocketState.Open)
         {
             WebSocketManager.instance.AddHandlerMessage(MessageHandler);
-        }       
+        }
+
+        if (GameManager.instance.TWBenabled)
+        {
+            StartCoroutine(Timer());
+        }
+        
     }
 
     private void Update()
@@ -66,20 +74,18 @@ public class ClassroomManager : MonoBehaviour
     }
 
 
-    public void DetectSpeech()
-    {
-        foreach (Animator animator in animators)
-        {
-            animator.SetTrigger("SpeechDetected");
-        }
-    }
-
     private void OnDestroy()
     {
         if (GameManager.instance.TWBenabled)
         {
             WebSocketManager.instance.RemoveHandlerMessage(MessageHandler);
         }
+    }
+
+    private IEnumerator Timer()
+    {
+        yield return new WaitForSeconds(ActivityDuration);
+        EventManager.TriggerEvent("StartCheering");
     }
 
 
