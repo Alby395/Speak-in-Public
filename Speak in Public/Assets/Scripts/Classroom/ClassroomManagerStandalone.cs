@@ -15,7 +15,7 @@ public class ClassroomManagerStandalone : ClassroomManager
     
     private IEnumerator Timer()
     {
-        yield return new WaitForSeconds(ActivityDuration);
+        yield return new WaitForSeconds(ActivityDuration * 60f);
         EventManager.TriggerEvent("StartCheering");
     }
 }

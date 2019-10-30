@@ -30,4 +30,9 @@ public class StandaloneMenu : MonoBehaviour
         Application.Quit();
     }
 
+    public void EnableTWB(bool enable)
+    {
+        GameManager.instance.TWBenabled = enable;
+    }
+
 }

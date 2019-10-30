@@ -30,6 +30,6 @@ public class PersonManager : MonoBehaviour
 
     void Cheer()
     {
-        animator.SetTrigger("Cheer");
+        animator.SetTrigger("StartCheering");
     }
 }

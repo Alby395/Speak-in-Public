@@ -56,4 +56,9 @@ public class TWBMenu : MonoBehaviour
     {
         SceneManager.LoadScene(index);
     }
+
+    public void EnableTWB(bool enable)
+    {
+        GameManager.instance.TWBenabled = enable;
+    }
 }
