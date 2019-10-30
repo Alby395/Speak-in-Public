@@ -556,7 +556,7 @@ GameObject:
   - component: {fileID: 858842891}
   - component: {fileID: 858842890}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Topic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -918,7 +918,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1348814676
 Transform:
   m_ObjectHideFlags: 0
@@ -945,6 +945,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 227cfa829bdded140a1581ac8f7af8fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TextTopic: {fileID: 858842888}
   people: {fileID: 723933540693029693}
 --- !u!1 &1407042210
 GameObject:
@@ -962,7 +963,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1407042211
 Transform:
   m_ObjectHideFlags: 0
@@ -989,6 +990,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a64d20d3f765f942b0d80e369cc55b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TextTopic: {fileID: 858842888}
   people: {fileID: 723933540693029693}
 --- !u!1001 &1549408842
 PrefabInstance:

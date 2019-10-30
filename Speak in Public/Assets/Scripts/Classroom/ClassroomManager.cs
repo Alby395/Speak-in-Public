@@ -16,7 +16,7 @@ public abstract class ClassroomManager : MonoBehaviour
     private bool MicrophoneEnabled;
     private string Topic;
 
-    public TMP_InputField TextTopic;
+    public GameObject TextTopic;
     public GameObject people;
     private List<Animator> animators;
 
@@ -49,7 +49,7 @@ public abstract class ClassroomManager : MonoBehaviour
 
         transform.parent.GetComponent<MicrophoneManager>().enabled = MicrophoneEnabled;
 
-        TextTopic.text = Topic;
+        TextTopic.GetComponent<TMP_Text>().text = Topic;
 
 
         Init();
