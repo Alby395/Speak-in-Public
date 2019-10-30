@@ -25,6 +25,12 @@ public class PersonManager : MonoBehaviour
 
     void DetectSpeech()
     {
+        StartCoroutine(Wait());
+    }
+
+    private IEnumerator Wait()
+    {
+        yield return new WaitForSeconds((float)new System.Random().NextDouble());
         animator.SetTrigger("SpeechDetected");
     }
 
