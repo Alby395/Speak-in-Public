@@ -8,29 +8,25 @@ using UnityEditor;
 using WebSocketSharp;
 using UnityEngine.Events;
 
-public class ClassroomManager : MonoBehaviour
+public abstract class ClassroomManager : MonoBehaviour
 {
     private int NumberOfPeople;
     private float PercentageOfDistractedPeople;
     private bool MicrophoneEnabled;
-    private int ActivityDuration;
-
+    
     public GameObject people;
     private List<Animator> animators;
 
-    private delegate void Event();
-    private event Event Consumer;
-
-    private void Awake()
+    
+    public virtual void Awake()
     {
         NumberOfPeople = PlayerPrefs.GetInt("NumberOfPeople");
         PercentageOfDistractedPeople = Mathf.FloorToInt(PlayerPrefs.GetInt("NumberOfPeople") * PlayerPrefs.GetInt("PercentageOfDistractedPeople") / 100);
         MicrophoneEnabled = (PlayerPrefs.GetInt("MicrophoneEnabled") == 0) ? false : true;
-        ActivityDuration = PlayerPrefs.GetInt("ActivityDuration");
     }
 
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         GameManager.instance.EnableVR();
 
@@ -47,26 +43,16 @@ public class ClassroomManager : MonoBehaviour
             animators[i].SetBool("Reactive", true);
         }
 
-        transform.GetComponent<MicrophoneManager>().enabled = MicrophoneEnabled;
+        transform.parent.GetComponent<MicrophoneManager>().enabled = MicrophoneEnabled;
 
 
-        EventManager.StartListening("ReturnToMenu", GameManager.instance.GoToMenu);
-
-        if (GameManager.instance.TWBenabled && WebSocketManager.instance.GetStatus() == WebSocketState.Open)
-        {
-            WebSocketManager.instance.AddHandlerMessage(MessageHandler);
-        }
-
-        if (GameManager.instance.TWBenabled)
-        {
-            StartCoroutine(Timer());
-        }
-        
+        Init();
     }
 
-    private void Update()
+    protected abstract void Init();
+
+    protected virtual void Update()
     {
-        Consumer?.Invoke();
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             GameManager.instance.GoToMenu();
@@ -74,66 +60,10 @@ public class ClassroomManager : MonoBehaviour
     }
 
 
-    private void OnDestroy()
-    {
-        if (GameManager.instance.TWBenabled)
-        {
-            WebSocketManager.instance.RemoveHandlerMessage(MessageHandler);
-        }
-    }
-
-    private IEnumerator Timer()
-    {
-        yield return new WaitForSeconds(ActivityDuration);
-        EventManager.TriggerEvent("StartCheering");
-    }
-
-
-    private void MessageHandler(object sender, MessageEventArgs e)
-    {
-        Message msg = JsonUtility.FromJson<Message>(e.Data);
-        print(msg);
-        if (msg.type == "StartCheering")
-        {
-            Consumer += TerminateActivity;
-        }
-        if (msg.type == "ReturnToMenu")
-        {
-            Consumer += GoToMenu;
-        }
-        else
-        {
-            Debug.Log("Unknown type of message");
-        }
-    }
-
-    private void TerminateActivity()
-    {
-        EventManager.TriggerEvent("StartCheering");
-        Consumer -= TerminateActivity;
-        if (GameManager.instance.TWBenabled)
-        {
-            StartCoroutine(ActivityTerminated());
-        }
-    }
-
-    private IEnumerator ActivityTerminated()
+    protected virtual IEnumerator ActivityTerminated()
     {
         yield return new WaitForSeconds(10f);
         GameManager.instance.GoToMenu();
     }
 
-    private void GoToMenu()
-    {
-        EventManager.TriggerEvent("GoToMenu");
-        Consumer -= GoToMenu;
-    }
-
-    
-    [Serializable]
-    private class Message
-    {
-        public string type;
-        public string message;
-    }
 }
