@@ -7,13 +7,16 @@ using UnityEngine.XR;
 using UnityEditor;
 using WebSocketSharp;
 using UnityEngine.Events;
+using TMPro;
 
 public abstract class ClassroomManager : MonoBehaviour
 {
     private int NumberOfPeople;
     private float PercentageOfDistractedPeople;
     private bool MicrophoneEnabled;
-    
+    private string Topic;
+
+    public TMP_InputField TextTopic;
     public GameObject people;
     private List<Animator> animators;
 
@@ -23,6 +26,7 @@ public abstract class ClassroomManager : MonoBehaviour
         NumberOfPeople = PlayerPrefs.GetInt("NumberOfPeople");
         PercentageOfDistractedPeople = Mathf.FloorToInt(PlayerPrefs.GetInt("NumberOfPeople") * PlayerPrefs.GetInt("PercentageOfDistractedPeople") / 100);
         MicrophoneEnabled = (PlayerPrefs.GetInt("MicrophoneEnabled") == 0) ? false : true;
+        Topic = PlayerPrefs.GetString("Topic");
     }
 
     // Start is called before the first frame update
@@ -44,6 +48,8 @@ public abstract class ClassroomManager : MonoBehaviour
         }
 
         transform.parent.GetComponent<MicrophoneManager>().enabled = MicrophoneEnabled;
+
+        TextTopic.text = Topic;
 
 
         Init();
