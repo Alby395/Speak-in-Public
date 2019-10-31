@@ -5,12 +5,8 @@ using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.SceneManagement;
 
-public class TWBMenu : MonoBehaviour
+public class Menu : MonoBehaviour
 {
-    public GameObject MainMenu;
-    public GameObject Settings;
-
-    public TMP_InputField sessionId;
 
     private void Start()
     {
@@ -22,26 +18,9 @@ public class TWBMenu : MonoBehaviour
 #endif
     }
 
-    public void ShowMainMenu()
-    {
-        MainMenu.SetActive(true);
-        Settings.SetActive(false);
-    }
-
-    public void ShowSettings()
-    {
-        MainMenu.SetActive(false);
-        Settings.SetActive(true);
-    }
-
-    public void StartConnection()
-    {
-        int session = int.Parse(sessionId.text);
-        WebSocketManager.instance.StartWebSocket(session);
-    }
-
     public void StartGame()
     {
+        GameManager.instance.gameId = 1;
         GameManager.instance.LoadLevel();
     }
 
@@ -51,14 +30,9 @@ public class TWBMenu : MonoBehaviour
         Application.Quit();
     }
 
-    //TEMP
-    public void LoadLevel(int index)
-    {
-        SceneManager.LoadScene(index);
-    }
-
     public void EnableTWB(bool enable)
     {
         GameManager.instance.TWBenabled = enable;
     }
+
 }
