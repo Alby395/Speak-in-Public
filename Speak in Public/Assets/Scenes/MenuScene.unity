@@ -244,7 +244,7 @@ GameObject:
   - component: {fileID: 87798996}
   - component: {fileID: 87798995}
   m_Layer: 5
-  m_Name: Settings
+  m_Name: SettingsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -697,7 +697,7 @@ GameObject:
   - component: {fileID: 187710880}
   - component: {fileID: 187710879}
   m_Layer: 5
-  m_Name: Settings
+  m_Name: SettingsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1553,7 +1553,7 @@ GameObject:
   - component: {fileID: 353692988}
   - component: {fileID: 353692987}
   m_Layer: 5
-  m_Name: Start
+  m_Name: StartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2870,7 +2870,7 @@ GameObject:
   - component: {fileID: 838169732}
   - component: {fileID: 838169731}
   m_Layer: 5
-  m_Name: Start
+  m_Name: StartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3354,7 +3354,7 @@ GameObject:
   - component: {fileID: 908283676}
   - component: {fileID: 908283675}
   m_Layer: 5
-  m_Name: Quit
+  m_Name: QuitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3637,7 +3637,7 @@ GameObject:
   - component: {fileID: 945934523}
   - component: {fileID: 945934522}
   m_Layer: 5
-  m_Name: Quit
+  m_Name: QuitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5435,7 +5435,7 @@ GameObject:
   - component: {fileID: 1698280169}
   - component: {fileID: 1698280168}
   m_Layer: 5
-  m_Name: Connect
+  m_Name: ConnectButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7430,7 +7430,7 @@ MonoBehaviour:
   m_MinValue: 1
   m_MaxValue: 30
   m_WholeNumbers: 1
-  m_Value: 1
+  m_Value: 7
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -7443,11 +7443,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1196780216264985701}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57440182a764b48bb83f72054d8c000e, type: 3}
+  m_Script: {fileID: 11500000, guid: d50cbbac213311d45b855dcbf896e17c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lab: {fileID: 1196780217024087238}
-  defaultValue: 7
+  parameter: StreamingRate
+  value: {fileID: 1196780217024087238}
 --- !u!114 &1196780216285763780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9455,7 +9455,7 @@ MonoBehaviour:
   m_MinValue: 1
   m_MaxValue: 100
   m_WholeNumbers: 1
-  m_Value: 1
+  m_Value: 50
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -9469,7 +9469,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1196780217984877815}
   - component: {fileID: 1196780217984877809}
-  - component: {fileID: 1196780217984877814}
+  - component: {fileID: 1196780217984877813}
   m_Layer: 5
   m_Name: QualityStreaming
   m_TagString: Untagged
@@ -9477,7 +9477,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1196780217984877814
+--- !u!114 &1196780217984877813
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9486,11 +9486,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1196780217984877812}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57440182a764b48bb83f72054d8c000e, type: 3}
+  m_Script: {fileID: 11500000, guid: d50cbbac213311d45b855dcbf896e17c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lab: {fileID: 1196780216223980065}
-  defaultValue: 50
+  parameter: StreamingQuality
+  value: {fileID: 1196780216223980065}
 --- !u!224 &1196780217984877815
 RectTransform:
   m_ObjectHideFlags: 0

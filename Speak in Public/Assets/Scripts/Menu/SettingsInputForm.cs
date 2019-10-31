@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(TMP_InputField))]
-public class InputPref : MonoBehaviour
+public class SettingsInputForm : MonoBehaviour
 {
     public string namePref;
     private TMP_InputField input;
