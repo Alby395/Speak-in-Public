@@ -20,7 +20,14 @@ public abstract class ClassroomManager : MonoBehaviour
     public GameObject people;
     private List<Animator> animators;
 
-    
+    public string newTopic;
+
+    public static ClassroomManager instance
+    {
+        get;
+        private set;
+    }
+
     public virtual void Awake()
     {
         NumberOfPeople = PlayerPrefs.GetInt("NumberOfPeople");

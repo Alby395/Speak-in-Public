@@ -49,6 +49,11 @@ public class ClassroomManagerTWB : ClassroomManager
         {
             Consumer += GoToMenu;
         }
+        if (msg.type == "SetTopic")
+        {
+            newTopic = msg.message;
+            Consumer += SetTopic;
+        }
         else
         {
             Debug.Log("Unknown type of message");
@@ -59,16 +64,19 @@ public class ClassroomManagerTWB : ClassroomManager
     {
         EventManager.TriggerEvent("StartCheering");
         Consumer -= TerminateActivity;
-        if (GameManager.instance.TWBenabled)
-        {
-            StartCoroutine(ActivityTerminated());
-        }
+        StartCoroutine(ActivityTerminated());
     }
 
     private void GoToMenu()
     {
         EventManager.TriggerEvent("GoToMenu");
         Consumer -= GoToMenu;
+    }
+
+    private void SetTopic()
+    {
+        EventManager.TriggerEvent("SetTopic");
+        Consumer -= SetTopic;
     }
 
 
