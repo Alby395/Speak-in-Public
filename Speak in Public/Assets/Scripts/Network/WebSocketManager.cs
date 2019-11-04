@@ -77,7 +77,9 @@ public class WebSocketManager : MonoBehaviour
         }
         string resReply = webRequestReply.downloadHandler.text;
         Debug.Log("Received: " + resReply);
-        GameManager.instance.gameId = JsonUtility.FromJson<ResponseReply>(resReply).configuration.configuration.id_activity;
+        ConfigurationDetail det = JsonUtility.FromJson<ResponseReply>(resReply).configuration.configuration;
+        GameManager.instance.gameId = det.id_activity;
+        det.Setup();
         StartWebSocket();
     }
 
@@ -162,10 +164,22 @@ public class WebSocketManager : MonoBehaviour
         public ConfigurationDetail configuration;
     }
 
-    [Serializable]
-    private class ConfigurationDetail
-    {
-        public int id_activity;
-    }
+   
 
+}
+
+[Serializable]
+public class ConfigurationDetail
+{
+    public int NumberOfPeople;
+    public float PercentageOfDistractedPeople;
+    public bool MicrophoneEnabled;
+    public int id_activity;
+
+    public void Setup()
+    {
+        PlayerPrefs.SetInt("NumberOfPeople", NumberOfPeople);
+        PlayerPrefs.SetInt("PercentageOfDistractedPeople", Mathf.FloorToInt(PercentageOfDistractedPeople));
+        PlayerPrefs.SetInt("MicrophoneEnabled", MicrophoneEnabled ? 1 : 0);
+    }
 }

@@ -14,6 +14,7 @@ public abstract class ClassroomManager : MonoBehaviour
     private int NumberOfPeople;
     private float PercentageOfDistractedPeople;
     private bool MicrophoneEnabled;
+
     private string Topic;
 
     public GameObject TextTopic;
@@ -56,8 +57,6 @@ public abstract class ClassroomManager : MonoBehaviour
 
         transform.parent.GetComponent<MicrophoneManager>().enabled = MicrophoneEnabled;
 
-        TextTopic.GetComponent<TMP_Text>().text = Topic;
-
 
         Init();
     }
@@ -80,3 +79,5 @@ public abstract class ClassroomManager : MonoBehaviour
     }
 
 }
+
+

@@ -9,6 +9,9 @@ public class ClassroomManagerTWB : ClassroomManager
     private delegate void Event();
     private event Event Consumer;
 
+    private GameObject Topic;
+    private string newTopic;
+
     protected override void Init()
     {
         EventManager.StartListening("ReturnToMenu", GameManager.instance.GoToMenu);

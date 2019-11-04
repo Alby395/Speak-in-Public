@@ -10,6 +10,7 @@ public class Topic : MonoBehaviour
     private void Awake()
     {
         topic = GetComponent<TMP_Text>();
+        topic.text = PlayerPrefs.GetString("Topic");
         EventManager.StartListening("UpdateTopic", UpdateTopic);
     }
 
