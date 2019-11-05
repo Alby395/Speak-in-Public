@@ -322,7 +322,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3780680203029189264}
   m_Layer: 0
-  m_Name: Light (5)
+  m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6335,7 +6335,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7711090816179617386}
   m_Layer: 0
-  m_Name: Light (6)
+  m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16107,7 +16107,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100010, guid: 0c832427b2d0a5b428575d2604ecf5ed, type: 3}
-  - {fileID: 2100018, guid: 0c832427b2d0a5b428575d2604ecf5ed, type: 3}
+  - {fileID: 2100000, guid: 51cc74895b1174e4389c3eaedb4c0d41, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -17389,7 +17389,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6843816351661876937}
   m_Layer: 0
-  m_Name: Light (8)
+  m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21693,7 +21693,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7667492647601154433}
   m_Layer: 0
-  m_Name: Light (4)
+  m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22614,7 +22614,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8286355523748273681}
   m_Layer: 0
-  m_Name: Light (2)
+  m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24855,7 +24855,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7278717845719041900}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalPosition: {x: 0.5, y: -0.046, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3570296848949659925}
@@ -25036,7 +25036,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5478968231483110407}
   m_Layer: 0
-  m_Name: Light (1)
+  m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25313,7 +25313,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8194352746952943018}
   m_Layer: 0
-  m_Name: Light (7)
+  m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25857,7 +25857,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4789419350839338998}
   m_Layer: 0
-  m_Name: Light (3)
+  m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
