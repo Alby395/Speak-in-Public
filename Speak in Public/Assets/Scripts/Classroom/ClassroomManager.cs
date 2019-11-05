@@ -15,13 +15,10 @@ public abstract class ClassroomManager : MonoBehaviour
     private float PercentageOfDistractedPeople;
     private bool MicrophoneEnabled;
 
-    private string Topic;
-
     public GameObject TextTopic;
     public GameObject people;
     private List<Animator> animators;
-
-    public string newTopic;
+    
 
     public static ClassroomManager instance
     {
@@ -34,7 +31,6 @@ public abstract class ClassroomManager : MonoBehaviour
         NumberOfPeople = PlayerPrefs.GetInt("NumberOfPeople");
         PercentageOfDistractedPeople = Mathf.FloorToInt(PlayerPrefs.GetInt("NumberOfPeople") * PlayerPrefs.GetInt("PercentageOfDistractedPeople") / 100);
         MicrophoneEnabled = (PlayerPrefs.GetInt("MicrophoneEnabled") == 0) ? false : true;
-        Topic = PlayerPrefs.GetString("Topic");
     }
 
     // Start is called before the first frame update

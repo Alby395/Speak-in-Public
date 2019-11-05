@@ -175,11 +175,14 @@ public class ConfigurationDetail
     public float PercentageOfDistractedPeople;
     public bool MicrophoneEnabled;
     public int id_activity;
+    public string Topic;
 
     public void Setup()
     {
         PlayerPrefs.SetInt("NumberOfPeople", NumberOfPeople);
         PlayerPrefs.SetInt("PercentageOfDistractedPeople", Mathf.FloorToInt(PercentageOfDistractedPeople));
         PlayerPrefs.SetInt("MicrophoneEnabled", MicrophoneEnabled ? 1 : 0);
+        PlayerPrefs.SetString("Topic", Topic);
+        PlayerPrefs.Save();
     }
 }

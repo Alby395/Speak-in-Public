@@ -51,6 +51,15 @@ public class GameManager : MonoBehaviour
             XRSettings.LoadDeviceByName(newDevice);
             yield return null;
             XRSettings.enabled = enable;
+            if (string.IsNullOrEmpty(newDevice))
+            {
+                Application.targetFrameRate = -1;
+            }
+            else
+            {
+                Application.targetFrameRate = 60;
+                QualitySettings.vSyncCount = 0;
+            }
         }
         
     }

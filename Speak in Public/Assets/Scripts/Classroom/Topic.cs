@@ -16,6 +16,6 @@ public class Topic : MonoBehaviour
 
     private void UpdateTopic()
     {
-        topic.text = ClassroomManager.instance.newTopic;
+        topic.text = PlayerPrefs.GetString("Topic");
     }
 }

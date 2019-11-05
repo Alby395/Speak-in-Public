@@ -30,7 +30,14 @@ public class Streaminig : MonoBehaviour
 
     private void Start()
     {
-        stream = StartCoroutine(SendStreaming());
+        if (!GameManager.instance.TWBenabled)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            stream = StartCoroutine(SendStreaming());
+        }
     }
 
     private void Update()
@@ -48,12 +55,12 @@ public class Streaminig : MonoBehaviour
         float rate = 1 / (float)fps;
         while (true)
         {
-           //SendFrame(false, LevelManager.instance.attention);
+           SendFrame(false);
            yield return new WaitForSeconds(rate);
         }
     }
 
-    public void SendFrame(bool important, int value)
+    public void SendFrame(bool important)
     {
         virtuCamera.Render();
         RenderTexture.active = rendTexture;
@@ -67,9 +74,6 @@ public class Streaminig : MonoBehaviour
         message.data.frame = "data:image/jpg; base64," + frame;
         message.data.width = width;
         message.data.height = height;
-        message.data.@params = new Params();
-        message.data.@params.value = new Value();
-        message.data.@params.value.attention = value;
         WebSocketManager.instance.SendMessageWeb(JsonUtility.ToJson(message));
     }
 
@@ -86,20 +90,8 @@ public class Streaminig : MonoBehaviour
         public string frame;
         public int width;
         public int height;
-        public Params @params;
     }
 
-    [Serializable]
-    private class Params
-    {
-        public Value value;
-    }
-
-    [Serializable]
-    private class Value
-    {
-        public int attention;
-    }
 
 
 }

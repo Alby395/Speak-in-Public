@@ -44,15 +44,11 @@ public class ClassroomManagerTWB : ClassroomManager
     {
         Message msg = JsonUtility.FromJson<Message>(e.Data);
         print(msg);
-        if (msg.type == "StartCheering")
+        if (msg.type == "Stop")
         {
             Consumer += TerminateActivity;
         }
-        if (msg.type == "ReturnToMenu")
-        {
-            Consumer += GoToMenu;
-        }
-        if (msg.type == "SetTopic")
+        if (msg.type == "Command")
         {
             newTopic = msg.message;
             Consumer += SetTopic;
@@ -78,7 +74,8 @@ public class ClassroomManagerTWB : ClassroomManager
 
     private void SetTopic()
     {
-        EventManager.TriggerEvent("SetTopic");
+        PlayerPrefs.SetString("Topic", newTopic);
+        EventManager.TriggerEvent("UpdateTopic");
         Consumer -= SetTopic;
     }
 
