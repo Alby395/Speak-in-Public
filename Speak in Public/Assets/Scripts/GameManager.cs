@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
         gameId = 0;
         SceneManager.LoadScene(gameId);
         WebSocketManager.instance.StopWebSocket();
+        DisableVR();
     }
 
     private IEnumerator LoadDevice(string newDevice, bool enable)
