@@ -6,6 +6,8 @@ public class PersonManager : MonoBehaviour
 {
     private Animator animator;
 
+    private bool isBusy;
+
     private void Awake()
     {
         animator = transform.GetComponent<Animator>();
@@ -21,6 +23,7 @@ public class PersonManager : MonoBehaviour
     private void OnDestroy()
     {
         EventManager.StopListening("StopCheering", Cheer);
+        EventManager.StopListening("SpeechDetected", DetectSpeech);
     }
 
     void DetectSpeech()
@@ -30,6 +33,8 @@ public class PersonManager : MonoBehaviour
 
     private IEnumerator Wait()
     {
+        Random.InitState(System.DateTime.Now.Millisecond);
+        //Debug.Log((float)new System.Random().NextDouble());
         yield return new WaitForSeconds((float)new System.Random().NextDouble());
         animator.SetTrigger("SpeechDetected");
     }

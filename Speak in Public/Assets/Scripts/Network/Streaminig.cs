@@ -47,7 +47,10 @@ public class Streaminig : MonoBehaviour
 
     private void OnDestroy()
     {
-        StopCoroutine(stream);
+        if (GameManager.instance.TWBenabled)
+        {
+            StopCoroutine(stream);
+        }
     }
 
     IEnumerator SendStreaming()

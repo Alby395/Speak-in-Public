@@ -70,7 +70,7 @@ public class MicrophoneManager : MonoBehaviour
 
         if (MicLoudness > 0.1f)
         {
-            Debug.Log(MicLoudness);
+            Debug.Log("Loudness: " + MicLoudness);
             EventManager.TriggerEvent("SpeechDetected");
         }
     }
