@@ -7,7 +7,6 @@ using TMPro;
 public class SettingsToggle : MonoBehaviour
 {
     public string parameter;
-    public TextMeshProUGUI value;
     private UnityEngine.UI.Toggle toggle;
 
     private void Awake()
