@@ -10,17 +10,37 @@ public class Menu : MonoBehaviour
 
     private void Start()
     {
-#if PLATFORM_ANDROID
-        if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
-        {
-            Permission.RequestUserPermission(Permission.Microphone);
-        }
-#endif
+        #if PLATFORM_ANDROID
+                if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
+                {
+                    Permission.RequestUserPermission(Permission.Microphone);
+                }
+        #endif
     }
 
     public void StartGame()
     {
-        GameManager.instance.gameId = 1;
+        string scene = PlayerPrefs.GetString("Location", "");
+
+        switch(scene)
+        {
+            case "School":
+                GameManager.instance.gameId = 1;
+                break;
+            
+            case "Restaurant":
+                GameManager.instance.gameId = 2;
+                break;
+            
+            case "Doctor's office":
+                GameManager.instance.gameId = 3;
+                break;
+
+            default:
+                GameManager.instance.gameId = 1;
+                break;
+        }
+
         GameManager.instance.LoadLevel();
     }
 

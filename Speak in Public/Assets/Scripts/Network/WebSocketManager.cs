@@ -65,21 +65,29 @@ public class WebSocketManager : MonoBehaviour
             Debug.Log("Error: " + webRequest.error);
             yield break;
         }
+
         string res = webRequest.downloadHandler.text;
         Debug.Log("Received: " + res);
+
         activityId = JsonUtility.FromJson<Response>(res).id;
         UnityWebRequest webRequestReply = UnityWebRequest.Get(urlReply + activityId);
+
         yield return webRequestReply.SendWebRequest();
+
         if (webRequestReply.isNetworkError)
         {
             Debug.Log("Error Reply: " + webRequestReply.error);
             yield break;
         }
+
         string resReply = webRequestReply.downloadHandler.text;
         Debug.Log("Received: " + resReply);
+
         ConfigurationDetail det = JsonUtility.FromJson<ResponseReply>(resReply).configuration.configuration;
-        GameManager.instance.gameId = det.id_activity;
+        GameManager.instance.gameId = det.id_activity;  //TODO Aggiungere caricamento scena corretta
+
         det.Setup();
+
         StartWebSocket();
     }
 
@@ -174,7 +182,7 @@ public class ConfigurationDetail
     public int NumberOfPeople;
     public float PercentageOfDistractedPeople;
     public bool MicrophoneEnabled;
-    public int id_activity;
+    public int id_activity;     //TODO Aggiungere caricamento scena corretta
     public string Topic;
 
     public void Setup()
