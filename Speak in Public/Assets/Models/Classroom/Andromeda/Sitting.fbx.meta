@@ -1,0 +1,218 @@
+fileFormatVersion: 2
+guid: 0b77777010002144aa9311a342165f91
+ModelImporter:
+  serializedVersion: 26
+  internalIDToNameTable:
+  - first:
+      74: -203655887218126122
+    second: mixamo.com
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bodymat
+    second: {fileID: 2100000, guid: d49319168737109408d6470f4858a724, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hairmat
+    second: {fileID: 2100000, guid: d036c0e93d10faa41a3e717d08e7f446, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Shoesmat
+    second: {fileID: 2100000, guid: 6c85b3d9f3cff2945a51af9b53191e4c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Topmat
+    second: {fileID: 2100000, guid: aade5ab43f16b064db85ac4b598e8a3a, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Andromeda_Body_Diffuse
+    second: {fileID: 2800000, guid: 8daeff1bfbc6b5e459df56cafbc71a67, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Andromeda_Body_Gloss
+    second: {fileID: 2800000, guid: 1416c056b7c47ff4fa75743ed1fafc34, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Andromeda_Body_Normal
+    second: {fileID: 2800000, guid: f8de07343ede3d44ba03c6b414d88b1c, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Andromeda_Body_Opacity
+    second: {fileID: 2800000, guid: 55f8dccb6d0b64347b150d4bb5797d5e, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Andromeda_Body_Specular
+    second: {fileID: 2800000, guid: c94c7f36afddb7b4fb23e30c0beb1c79, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Andromeda_Hair_Diffuse
+    second: {fileID: 2800000, guid: d27f503fe84afda4e9698f4727ab65d2, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Andromeda_Hair_Gloss
+    second: {fileID: 2800000, guid: 71bba5205ba5f7d4db7d3f1c0f5b79cb, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Andromeda_Hair_Normal
+    second: {fileID: 2800000, guid: 0ce9b104eeac8a744b967c4d729ac0ce, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Andromeda_Hair_Opacity
+    second: {fileID: 2800000, guid: 92ada3ebd7a3b6a448fc5511f5ffb236, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Andromeda_Hair_Specular
+    second: {fileID: 2800000, guid: 752db3941c23a7c4aa33007993bc21d3, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Andromeda_Shoes_Diffuse
+    second: {fileID: 2800000, guid: e87ae0218a93c8d468fb2dc33c8917ea, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Andromeda_Shoes_Gloss
+    second: {fileID: 2800000, guid: 30a78c513f11d324388b2f8e4cb09d99, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Andromeda_Shoes_Normal
+    second: {fileID: 2800000, guid: 7b27b2436e870b74189d189cc8dc5dfc, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Andromeda_Shoes_Opacity
+    second: {fileID: 2800000, guid: dc8084826bbc1bd4d92819c9d3448383, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Andromeda_Shoes_Specular
+    second: {fileID: 2800000, guid: bd5da1f666620ef438529fe8a818e169, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Andromeda_Top_Diffuse
+    second: {fileID: 2800000, guid: 57162537f7dc980448fba7a897a5354b, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Andromeda_Top_Gloss
+    second: {fileID: 2800000, guid: e3a86330b59b05c4a914e952b3e99ffa, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Andromeda_Top_Normal
+    second: {fileID: 2800000, guid: a91a858ffc1896e4790fe1d9d6e98e53, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Andromeda_Top_Opacity
+    second: {fileID: 2800000, guid: 9d562e15a6dc7dd45a1a009390544f90, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Andromeda_Top_Specular
+    second: {fileID: 2800000, guid: c9f19f3eb8a0e8643b1dda8417ccbe67, type: 3}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
