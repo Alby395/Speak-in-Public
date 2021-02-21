@@ -6,6 +6,8 @@ using UnityEngine.Networking;
 
 public class WebSocketManager : MonoBehaviour
 {
+    [SerializeField] private TextAsset networkConfigurationFile;
+
     private int idSession;
     private int activityId;
     private WebSocket ws;
@@ -31,6 +33,10 @@ public class WebSocketManager : MonoBehaviour
 
     public void StartWebSocket(int idSession)
     {
+        NetworkConfiguration config = JsonUtility.FromJson<NetworkConfiguration>(networkConfigurationFile.text);
+        //url = config.url;
+        //urlReply = config.urlReply;
+        
         url = PlayerPrefs.GetString("URL", null);
         urlReply = PlayerPrefs.GetString("URLReply", null);
         this.idSession = idSession;
@@ -193,4 +199,11 @@ public class ConfigurationDetail
         PlayerPrefs.SetString("Topic", Topic);
         PlayerPrefs.Save();
     }
+}
+
+[Serializable]
+public class NetworkConfiguration
+{
+    public string url;
+    public string urlReply;
 }

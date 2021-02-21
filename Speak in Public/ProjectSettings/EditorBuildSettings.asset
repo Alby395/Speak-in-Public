@@ -21,5 +21,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Classroom.unity
     guid: a145658d6a523254d838b39fb61cd861
   m_configObjects:
-    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 19891333797c10346b7dc339942b2a34,
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: e95e9d458395f4449902bf87633e656a,
+      type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 299f9cf7efb871c4390344eb62d7c5bc,
       type: 2}
