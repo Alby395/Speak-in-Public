@@ -7,27 +7,17 @@ using WebSocketSharp;
 public class ActivityManagerTWB : ActivityManager
 {
     private delegate void Event();
-    private event Event Consumer;
 
     private GameObject Topic;
     private string newTopic;
 
     protected override void Init()
     {
-        EventManager.StartListening("ReturnToMenu", GameManager.instance.GoToMenu);
+        EventManager.StartListening("Completed", EndSession);
 
         if (WebSocketManager.instance.GetStatus() == WebSocketState.Open)
         {
             WebSocketManager.instance.AddHandlerMessage(MessageHandler);
-        }
-    }
-
-    protected override void Update()
-    {
-        Consumer?.Invoke();
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            GameManager.instance.GoToMenu();
         }
     }
 
@@ -43,42 +33,30 @@ public class ActivityManagerTWB : ActivityManager
     private void MessageHandler(object sender, MessageEventArgs e)
     {
         Message msg = JsonUtility.FromJson<Message>(e.Data);
+
         print(msg);
-        if (msg.type == "Stop")
+        
+        //TODO Aggiungere gli altri messaggi
+        switch (msg.type) 
         {
-            Consumer += TerminateActivity;
-        }
-        if (msg.type == "Command")
-        {
-            newTopic = msg.message;
-            Consumer += SetTopic;
-        }
-        else
-        {
-            Debug.Log("Unknown type of message");
+            case "Stop":
+                EventManager.TriggerEvent("StartCheering");
+                EventManager.TriggerEvent("StopRecording");
+                break;
+            case "Command":
+                EventManager.TriggerEvent("UpdateTopic", msg.message);
+                break;
+            default:
+                Debug.Log("Unknown type of message");
+                break;
         }
     }
 
-    private void TerminateActivity()
+
+    private void EndSession()
     {
-        EventManager.TriggerEvent("StartCheering");
-        Consumer -= TerminateActivity;
         StartCoroutine(ActivityTerminated());
     }
-
-    private void GoToMenu()
-    {
-        EventManager.TriggerEvent("GoToMenu");
-        Consumer -= GoToMenu;
-    }
-
-    private void SetTopic()
-    {
-        PlayerPrefs.SetString("Topic", newTopic);
-        EventManager.TriggerEvent("UpdateTopic");
-        Consumer -= SetTopic;
-    }
-
 
     [Serializable]
     private class Message

@@ -11,11 +11,13 @@ public class Topic : MonoBehaviour
     {
         topic = GetComponent<TMP_Text>();
         topic.text = PlayerPrefs.GetString("Topic");
-        EventManager.StartListening("UpdateTopic", UpdateTopic);
+        
+        if(GameManager.instance.TWBenabled)
+            EventManager.StartListening("UpdateTopic", UpdateTopic);
     }
 
-    private void UpdateTopic()
+    private void UpdateTopic(string txt)
     {
-        topic.text = PlayerPrefs.GetString("Topic");
+        topic.text = txt;
     }
 }

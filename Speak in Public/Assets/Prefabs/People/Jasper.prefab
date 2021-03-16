@@ -3674,6 +3674,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3172471076216109106}
   - component: {fileID: 3172471076216109108}
+  - component: {fileID: 5293491377216207412}
   m_Layer: 0
   m_Name: Jasper
   m_TagString: Untagged
@@ -3730,6 +3731,20 @@ LODGroup:
     renderers:
     - renderer: {fileID: 3172471077255446191}
   m_Enabled: 1
+--- !u!114 &5293491377216207412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3172471076216109105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a75918e5df0fe784bb2f860bb3ae0091, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  priority: 0
+  distractible: 0
 --- !u!1 &3172471076223187784
 GameObject:
   m_ObjectHideFlags: 0

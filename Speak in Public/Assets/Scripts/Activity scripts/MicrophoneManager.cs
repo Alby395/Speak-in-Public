@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,10 +9,30 @@ public class MicrophoneManager : MonoBehaviour
 {
     public static float MicLoudness;
     private string _device;
+    private DateTime _startTime;
 
-    private void Start()
+    AudioClip _clipRecord;
+    int _sampleWindow = 128;
+    
+    bool _isInitialized;
+
+    void OnEnable()
     {
+        if (_device == null)
+            _device = Microphone.devices[0];
 
+        _isInitialized = true;
+        
+        if(GameManager.instance.TWBenabled)
+        {
+            EventManager.StartListening("StartRecording", StartMicrophone);
+            EventManager.StartListening("StopRecording", StopMicrophone);
+        }
+        else
+        {
+            StartCoroutine(MicrophoneCheck());
+            StartMicrophone();
+        }
     }
 
     private IEnumerator AskForMicPermission()
@@ -23,21 +43,35 @@ public class MicrophoneManager : MonoBehaviour
         }   
     }
 
-    //mic initialization
-    void InitMic()
+    private void StartMicrophone()
     {
-        if (_device == null) _device = Microphone.devices[0];
-        _clipRecord = Microphone.Start(_device, true, 999, 44100);
-    }
+        _clipRecord = Microphone.Start(_device, false, 600, 44100);
+        _startTime = DateTime.Now;
+    }   
 
     void StopMicrophone()
     {
         Microphone.End(_device);
+        double time = _startTime.Subtract(DateTime.Now).TotalSeconds;
+
+        int n = (int) (time + 1) * 44100 ;
+
+        float[] samples = new float[n];
+
+        _clipRecord.GetData(samples, 0);
+
+        AudioClip newClip = AudioClip.Create("Activity registration", n, _clipRecord.channels, _clipRecord.frequency, false);
+
+        newClip.SetData(samples, 0);
+
+        SavWav.Save("Registration", newClip);
+
+        //TODO Aggiungere chiamata a server per salvataggio clip
+
+        EventManager.TriggerEvent("Completed");
     }
 
-    AudioClip _clipRecord;
-    int _sampleWindow = 128;
-
+    
     //get data from microphone into audioclip
     float LevelMax()
     {
@@ -62,61 +96,38 @@ public class MicrophoneManager : MonoBehaviour
     }
 
 
-    void Update()
+    private IEnumerator MicrophoneCheck()
     {
-        // levelMax equals to the highest normalized value power 2, a small number because < 1
-        // pass the value to a static var so we can access it from anywhere
-        MicLoudness = LevelMax();
-
-        if (MicLoudness > 0.1f)
+        while(true)
         {
-            Debug.Log("Loudness: " + MicLoudness);
-            EventManager.TriggerEvent("SpeechDetected");
+            // levelMax equals to the highest normalized value power 2, a small number because < 1
+            // pass the value to a static var so we can access it from anywhere
+            MicLoudness = LevelMax();
+            
+            if (MicLoudness > 0.1f)
+            {
+                Debug.Log("Loudness: " + MicLoudness);
+                EventManager.TriggerEvent("SpeechDetected");
+            }
+            yield return null;
         }
     }
 
-    bool _isInitialized;
     // start mic when scene starts
-    void OnEnable()
-    {
-        InitMic();
-        _isInitialized = true;
-    }
-
+    
     //stop mic when loading a new level or quit application
     void OnDisable()
     {
-        StopMicrophone();
+        StopCoroutine("MicrophoneCheck");
+        if(Microphone.IsRecording(_device))
+            Microphone.End(_device);
     }
 
     void OnDestroy()
     {
-        StopMicrophone();
+        StopCoroutine("MicrophoneCheck");
+        if(Microphone.IsRecording(_device))
+            Microphone.End(_device);
     }
-
-
-    // make sure the mic gets started & stopped when application gets focused
-    void OnApplicationFocus(bool focus)
-    {
-        if (focus)
-        {
-            //Debug.Log("Focus");
-
-            if (!_isInitialized)
-            {
-                //Debug.Log("Init Mic");
-                InitMic();
-                _isInitialized = true;
-            }
-        }
-        if (!focus)
-        {
-            //Debug.Log("Pause");
-            StopMicrophone();
-            //Debug.Log("Stop Mic");
-            _isInitialized = false;
-
-        }
-    }
-
+    
 }

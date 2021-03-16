@@ -17,8 +17,6 @@ public abstract class ActivityManager : MonoBehaviour
 
     public GameObject TextTopic;
     public GameObject people;
-    private List<Animator> animators;
-    
 
     public static ActivityManager instance
     {
@@ -43,47 +41,42 @@ public abstract class ActivityManager : MonoBehaviour
             }
         }
 
-        NumberOfPeople = PlayerPrefs.GetInt("NumberOfPeople");
-        PercentageOfDistractedPeople = Mathf.FloorToInt(PlayerPrefs.GetInt("NumberOfPeople") * PlayerPrefs.GetInt("PercentageOfDistractedPeople") / 100);
+
         MicrophoneEnabled = (PlayerPrefs.GetInt("MicrophoneEnabled") == 0) ? false : true;
     }
 
     // Start is called before the first frame update
     public virtual void Start()
     {
-        GameManager.instance.EnableVR();
-
+        
+        print("start");
         System.Random rnd = new System.Random();
-        animators = people.GetComponentsInChildren<Animator>().OrderBy(x => rnd.Next()).ToList();
-        for (int i = 0; i < 8 - NumberOfPeople; i++)
+        
+        PersonManager[] peopleManagers = people.GetComponentsInChildren<PersonManager>().OrderBy(x => rnd.Next()).ToArray();
+
+        NumberOfPeople = Math.Min(peopleManagers.Length, PlayerPrefs.GetInt("NumberOfPeople"));
+
+        PercentageOfDistractedPeople = Mathf.FloorToInt(NumberOfPeople * PlayerPrefs.GetInt("PercentageOfDistractedPeople") / 100);
+
+        for (int i = 0; i < peopleManagers.Length - NumberOfPeople; i++)
         {
-            Destroy(animators[i].gameObject);
+            Destroy(peopleManagers[i].gameObject);
         }
 
-        animators = people.GetComponentsInChildren<Animator>().OrderBy(x => rnd.Next()).ToList();
+        peopleManagers = people.GetComponentsInChildren<PersonManager>().OrderBy(x => rnd.Next()).ToArray();
         for (int i = 0; i < PercentageOfDistractedPeople; i++)
         {
-            animators[i].SetBool("Reactive", true);
+            peopleManagers[i].SetDistract();
         }
 
         transform.GetComponent<MicrophoneManager>().enabled = MicrophoneEnabled;
-
 
         Init();
     }
 
     protected abstract void Init();
 
-    protected virtual void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            GameManager.instance.GoToMenu();
-        }
-    }
-
-
-    protected virtual IEnumerator ActivityTerminated()
+    protected IEnumerator ActivityTerminated()
     {
         yield return new WaitForSeconds(10f);
         GameManager.instance.GoToMenu();

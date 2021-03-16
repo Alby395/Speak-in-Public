@@ -16,11 +16,7 @@ public class ActivityManagerStandalone : ActivityManager
     private IEnumerator Timer()
     {
         yield return new WaitForSeconds(ActivityDuration * 60f);
-        TerminateActivity();
-    }
-
-    private void TerminateActivity()
-    {
+        
         EventManager.TriggerEvent("StartCheering");
         StartCoroutine(ActivityTerminated());
     }
