@@ -13,6 +13,8 @@ public class DistractionManager : MonoBehaviour
     private Material _mat;
     private float _alpha;
 
+    private bool _lightIsOn = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,7 +32,7 @@ public class DistractionManager : MonoBehaviour
             EventManager.StartListening("PlayDistraction", PlayAudio);
         }
         
-        EventManager.StartListening("Lights", TurnOff);
+        EventManager.StartListening("Lights", TurnLight);
 
         _mat = darkBox.GetComponent<MeshRenderer>().material;
         _alpha = _mat.color.a;
@@ -50,36 +52,35 @@ public class DistractionManager : MonoBehaviour
         }
     }
 
-    private void TurnOff()
+    private void TurnLight()
     {
-        StartCoroutine(ChangeMaterial(true));
-        EventManager.StartListening("Lights", TurnOn);
-        EventManager.StopListening("Lights", TurnOff);
+        StartCoroutine(ChangeMaterial());
+
     }
 
-    private void TurnOn()
-    {
-        StartCoroutine(ChangeMaterial(false));
-        EventManager.StartListening("Lights", TurnOff);
-        EventManager.StopListening("Lights", TurnOn);
-    }
-
-    private IEnumerator ChangeMaterial(bool dark)
+    private IEnumerator ChangeMaterial()
     {
         float time = 0;
-        darkBox.gameObject.SetActive(true);
+
+        if(!_lightIsOn)
+            darkBox.gameObject.SetActive(true);
 
         while(time < lightTime)
         {
             time += Time.deltaTime;
 
             Color col = _mat.color;
-            col.a = _alpha * (dark? time/lightTime : 1 - time/lightTime);
+            col.a = _alpha * (_lightIsOn? time/lightTime : 1 - time/lightTime);
 
             _mat.color = col;
 
             yield return null;
         }
+
+        if(_lightIsOn)
+            darkBox.gameObject.SetActive(true);
+
+        _lightIsOn = !_lightIsOn;
     }
 }
 

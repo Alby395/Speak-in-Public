@@ -20,27 +20,6 @@ public class Menu : MonoBehaviour
 
     public void StartGame()
     {
-        string scene = PlayerPrefs.GetString("Location", "");
-
-        switch(scene)
-        {
-            case "School":
-                GameManager.instance.gameId = 1;
-                break;
-            
-            case "Restaurant":
-                GameManager.instance.gameId = 2;
-                break;
-            
-            case "Doctor's office":
-                GameManager.instance.gameId = 3;
-                break;
-
-            default:
-                GameManager.instance.gameId = 1;
-                break;
-        }
-
         GameManager.instance.LoadLevel();
     }
 

@@ -12,11 +12,13 @@ using TMPro;
 public abstract class ActivityManager : MonoBehaviour
 {
     private int NumberOfPeople;
-    private float PercentageOfDistractedPeople;
+    protected float PercentageOfDistractedPeople;
     private bool MicrophoneEnabled;
 
     public GameObject TextTopic;
     public GameObject people;
+    
+    protected PersonManager[] peopleManagers;
 
     public static ActivityManager instance
     {
@@ -41,18 +43,15 @@ public abstract class ActivityManager : MonoBehaviour
             }
         }
 
-
         MicrophoneEnabled = (PlayerPrefs.GetInt("MicrophoneEnabled") == 0) ? false : true;
     }
 
     // Start is called before the first frame update
     public virtual void Start()
     {
-        
-        print("start");
         System.Random rnd = new System.Random();
         
-        PersonManager[] peopleManagers = people.GetComponentsInChildren<PersonManager>().OrderBy(x => rnd.Next()).ToArray();
+        peopleManagers = people.GetComponentsInChildren<PersonManager>().OrderBy(x => rnd.Next()).ToArray();
 
         NumberOfPeople = Math.Min(peopleManagers.Length, PlayerPrefs.GetInt("NumberOfPeople"));
 
@@ -63,11 +62,7 @@ public abstract class ActivityManager : MonoBehaviour
             Destroy(peopleManagers[i].gameObject);
         }
 
-        peopleManagers = people.GetComponentsInChildren<PersonManager>().OrderBy(x => rnd.Next()).ToArray();
-        for (int i = 0; i < PercentageOfDistractedPeople; i++)
-        {
-            peopleManagers[i].SetDistract();
-        }
+        peopleManagers = peopleManagers.OrderBy(x => rnd.Next()).ToArray();
 
         transform.GetComponent<MicrophoneManager>().enabled = MicrophoneEnabled;
 

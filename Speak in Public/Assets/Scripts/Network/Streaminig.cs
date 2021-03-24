@@ -93,6 +93,8 @@ public class Streaminig : MonoBehaviour
         public string frame;
         public int width;
         public int height;
+
+        // TODO aggiungere rotazione - Quaternion.toEuler
     }
 
 

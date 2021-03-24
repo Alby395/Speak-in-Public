@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
 
     public bool TWBenabled;
 
-
 	public static GameManager instance
 	{
 		get;
@@ -34,13 +33,34 @@ public class GameManager : MonoBehaviour
 
     public void LoadLevel()
     {
-        SceneManager.LoadScene(gameId);
+		string scene = PlayerPrefs.GetString("Location", "");
+
+        switch(scene)
+        {
+            case "School":
+                GameManager.instance.gameId = 1;
+                break;
+            
+            case "Restaurant":
+                GameManager.instance.gameId = 2;
+                break;
+            
+            case "Doctor's office":
+                GameManager.instance.gameId = 3;
+                break;
+
+            default:
+                GameManager.instance.gameId = 1;
+                break;
+        }
+		
+        SceneManager.LoadSceneAsync(gameId);
     }
 
     public void GoToMenu()
     {
         gameId = 0;
-        SceneManager.LoadScene(gameId);
+        SceneManager.LoadSceneAsync(gameId);
         WebSocketManager.instance.StopWebSocket();
     }
 

@@ -8,6 +8,11 @@ public class ActivityManagerStandalone : ActivityManager
 
     protected override void Init()
     {
+        for(int i = 0; i < PercentageOfDistractedPeople; i++)
+        {
+            peopleManagers[i].StartDistraction();
+        }
+        
         ActivityDuration = PlayerPrefs.GetInt("ActivityDuration");
         StartCoroutine(Timer());
     }

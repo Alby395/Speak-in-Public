@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Malcolm (Two)
+  m_Controller: {fileID: 9100000, guid: bd569a6b18c77e54aa50547132c5a0e0, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: -203655887218126122, guid: dd23ae5a2f8892544b6705686838aa00,
+      type: 3}
+    m_OverrideClip: {fileID: -203655887218126122, guid: f1c4b62ad04baeb449555c6f6c996c74,
+      type: 3}
+  - m_OriginalClip: {fileID: -203655887218126122, guid: effdc287a5a80e14dba121a854292816,
+      type: 3}
+    m_OverrideClip: {fileID: -203655887218126122, guid: 69a665419bb46a846b952aab6829026c,
+      type: 3}
+  - m_OriginalClip: {fileID: -203655887218126122, guid: b2db6c07ebe2a1c46bd79d230b097a33,
+      type: 3}
+    m_OverrideClip: {fileID: -203655887218126122, guid: 07e252e76a7d01e41a2198151ad9bb8a,
+      type: 3}
+  - m_OriginalClip: {fileID: -203655887218126122, guid: cafde09d11ba89c49a3c18a089f1db37,
+      type: 3}
+    m_OverrideClip: {fileID: -203655887218126122, guid: c91c5cb8d25e495489433f2aad4038ee,
+      type: 3}
