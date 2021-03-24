@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class MenuTWB : Menu
 {
+    public Text debug;
+
     public TMP_InputField sessionId;
 
     public GameObject StartButton;
@@ -25,6 +27,7 @@ public class MenuTWB : Menu
 
     public void StartConnection()
     {
+        debug.text = "pressed";
         int session = int.Parse(sessionId.text);
         WebSocketManager.instance.StartWebSocket(session);
     }

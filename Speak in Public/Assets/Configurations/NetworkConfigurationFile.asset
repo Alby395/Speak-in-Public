@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: NetworkConfiguration
+  m_Name: NetworkConfigurationFile
   m_EditorClassIdentifier: Assembly-CSharp::NetworkConfiguration
-  url: 
+  url: twb.i3lab.group/
   urlReply: 

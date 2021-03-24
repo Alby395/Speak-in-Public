@@ -76,7 +76,6 @@ public abstract class ActivityManager : MonoBehaviour
         yield return new WaitForSeconds(10f);
         GameManager.instance.GoToMenu();
     }
-
 }
 
 

@@ -3,10 +3,14 @@ using UnityEngine;
 using WebSocketSharp;
 using System;
 using UnityEngine.Networking;
+using System.IO;
+using UnityEngine.UI;
 
 public class WebSocketManager : MonoBehaviour
 {
-    [SerializeField] private NetworkConfiguration networkConfigurationFile;
+    public Text debug;
+
+    [SerializeField] private TextAsset networkConfigurationFile;
 
     private int idSession;
     private int activityId;
@@ -33,11 +37,12 @@ public class WebSocketManager : MonoBehaviour
 
     public void StartWebSocket(int idSession)
     {
-        url = networkConfigurationFile.url;
-        urlReply = networkConfigurationFile.urlReply;
-        
-        url = PlayerPrefs.GetString("URL", null);
-        urlReply = PlayerPrefs.GetString("URLReply", null);
+        debug.text = "HERE\n";
+        NetworkConfiguration config = JsonUtility.FromJson<NetworkConfiguration>(networkConfigurationFile.text);
+
+        url = config.url;
+        urlReply = config.urlReply;
+       
         this.idSession = idSession;
         if (url != null && urlReply != null)
         {
@@ -56,11 +61,10 @@ public class WebSocketManager : MonoBehaviour
         
     }
 
-
-
     IEnumerator GetActivityID()
     {
-        string urlTWB = "http://" + url + "/configuration/" + idSession;
+        debug.text += "\nConnecting";
+        string urlTWB = "https://" + url + "configuration/" + idSession;
         UnityWebRequest webRequest = UnityWebRequest.Get(urlTWB);
         Debug.Log(urlTWB);
         yield return webRequest.SendWebRequest();
@@ -73,9 +77,11 @@ public class WebSocketManager : MonoBehaviour
 
         string res = webRequest.downloadHandler.text;
         Debug.Log("Received: " + res);
+        
 
         activityId = JsonUtility.FromJson<Response>(res).id;
-        UnityWebRequest webRequestReply = UnityWebRequest.Get(urlReply + activityId);
+        /*
+        UnityWebRequest webRequestReply = UnityWebRequest.Get(Path.Combine(urlReply + activityId));
 
         yield return webRequestReply.SendWebRequest();
 
@@ -92,29 +98,41 @@ public class WebSocketManager : MonoBehaviour
         GameManager.instance.gameId = det.id_activity;  //TODO Aggiungere caricamento scena corretta
 
         det.Setup();
+        */
+        PlayerPrefs.SetInt("NumberOfPeople", 8);
+        PlayerPrefs.SetInt("PercentageOfDistractedPeople", 0);
+        PlayerPrefs.SetInt("MicrophoneEnabled", 0);
+        PlayerPrefs.Save();
 
         StartWebSocket();
     }
 
     private void StartWebSocket()
     {
-        ws = new WebSocket("ws://" + url + "/activity?activity=" + activityId + "&id=" + idSession);
+        ws = new WebSocket("wss://" + url + "activity?activity=" + activityId + "&id=" + idSession);
+        ws.SslConfiguration.EnabledSslProtocols = System.Security.Authentication.SslProtocols.Tls12;
+
+        print("wss://" + url + "activity?activity=" + activityId + "&id=" + idSession);
+        debug.text += "\nwss://" + url + "activity?activity=" + activityId + "&id=" + idSession + "\n";
         ws.OnClose += (sender, e) =>
         {
             Debug.Log("Chiusura WS");
+            print(e.Reason);
+            debug.text += e.Reason;
         };
         ws.OnError += (sender, e) =>
         {
             Debug.Log("Errore WS");
             Debug.Log(e.Exception);
+            debug.text += "ERRORE";
         };
         ws.OnOpen += (sender, e) =>
         {
             Debug.Log("Aperto WS");
+            debug.text += "Aperto";
         };
         ws.Connect();
     }
-
 
     public WebSocketState GetStatus()
     {
@@ -201,8 +219,7 @@ public class ConfigurationDetail
 }
 
 [Serializable]
-[CreateAssetMenu(fileName = "NetworkConfiguration", menuName = "ScriptableObjects/NetworkConfiguration", order = 1)]
-public class NetworkConfiguration: ScriptableObject
+public class NetworkConfiguration
 {
     public string url;
     public string urlReply;

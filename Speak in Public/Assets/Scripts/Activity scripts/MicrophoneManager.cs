@@ -13,15 +13,11 @@ public class MicrophoneManager : MonoBehaviour
 
     AudioClip _clipRecord;
     int _sampleWindow = 128;
-    
-    bool _isInitialized;
 
     void OnEnable()
     {
         if (_device == null)
             _device = Microphone.devices[0];
-
-        _isInitialized = true;
         
         if(GameManager.instance.TWBenabled)
         {

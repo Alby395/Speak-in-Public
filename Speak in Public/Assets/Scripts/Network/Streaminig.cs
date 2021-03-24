@@ -20,29 +20,27 @@ public class Streaminig : MonoBehaviour
     private void Awake()
     {
         virtuCamera = GetComponent<Camera>();
+
         rendTexture = new RenderTexture(width, height, 24);
         streaming = new Texture2D(width, height, TextureFormat.RGB24, false);
+
         virtuCamera.aspect = width / height;
         virtuCamera.targetTexture = rendTexture;
+
         quality = PlayerPrefs.GetInt("QualityStreaming", 50);
-        fps = PlayerPrefs.GetInt("RateStreaming", 50);
+        fps = 4;
     }
 
     private void Start()
     {
         if (!GameManager.instance.TWBenabled)
         {
-            gameObject.SetActive(false);
+            this.enabled = false;
         }
         else
         {
             stream = StartCoroutine(SendStreaming());
         }
-    }
-
-    private void Update()
-    {
-        gameObject.SetActive(WebSocketManager.instance.GetStatus() == WebSocketState.Open);
     }
 
     private void OnDestroy()
@@ -56,7 +54,7 @@ public class Streaminig : MonoBehaviour
     IEnumerator SendStreaming()
     {
         float rate = 1 / (float)fps;
-        while (true)
+        while (WebSocketManager.instance.GetStatus() == WebSocketState.Open)
         {
            SendFrame(false);
            yield return new WaitForSeconds(rate);
@@ -66,17 +64,21 @@ public class Streaminig : MonoBehaviour
     public void SendFrame(bool important)
     {
         virtuCamera.Render();
+
         RenderTexture.active = rendTexture;
         streaming.ReadPixels(new Rect(0, 0, width, height), 0, 0);
         streaming.Apply();
         RenderTexture.active = null;
+
         string frame = Convert.ToBase64String(streaming.EncodeToJPG(quality));
+
         Streaming message = new Streaming();
         message.important = important;
         message.data = new Data();
         message.data.frame = "data:image/jpg; base64," + frame;
         message.data.width = width;
         message.data.height = height;
+
         WebSocketManager.instance.SendMessageWeb(JsonUtility.ToJson(message));
     }
 

@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
 	{
 		if (instance == null)
 		{
-            Application.targetFrameRate = 45;
+            //Application.targetFrameRate = 45;
 			instance = this;
             gameId = 0;
 			DontDestroyOnLoad(gameObject);
