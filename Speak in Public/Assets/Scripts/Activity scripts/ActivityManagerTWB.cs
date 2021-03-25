@@ -40,11 +40,19 @@ public class ActivityManagerTWB : ActivityManager
         //TODO Aggiungere gli altri messaggi
         switch (msg.type) 
         {
+            case "Start":
+                EventManager.TriggerEvent("StartRecording");
+                break;
+
             case "Stop":
                 EventManager.TriggerEvent("StartCheering");
                 EventManager.TriggerEvent("StopRecording");
                 break;
 
+            case "End":
+                EventManager.TriggerEvent("Completed");
+                break;
+                
             // Topic
             case "Command":
                 EventManager.TriggerEvent("UpdateTopic", msg.message);

@@ -43,7 +43,7 @@ public abstract class ActivityManager : MonoBehaviour
             }
         }
 
-        MicrophoneEnabled = (PlayerPrefs.GetInt("MicrophoneEnabled") == 0) ? false : true;
+        GetComponent<MicrophoneManager>().enabled = (PlayerPrefs.GetInt("MicrophoneEnabled") == 0) ? false : true;
     }
 
     // Start is called before the first frame update
@@ -55,16 +55,12 @@ public abstract class ActivityManager : MonoBehaviour
 
         NumberOfPeople = Math.Min(peopleManagers.Length, PlayerPrefs.GetInt("NumberOfPeople"));
 
-        PercentageOfDistractedPeople = Mathf.FloorToInt(NumberOfPeople * PlayerPrefs.GetInt("PercentageOfDistractedPeople") / 100);
-
         for (int i = 0; i < peopleManagers.Length - NumberOfPeople; i++)
         {
             Destroy(peopleManagers[i].gameObject);
         }
 
         peopleManagers = peopleManagers.OrderBy(x => rnd.Next()).ToArray();
-
-        transform.GetComponent<MicrophoneManager>().enabled = MicrophoneEnabled;
 
         Init();
     }

@@ -10,10 +10,11 @@ public class Topic : MonoBehaviour
     private void Awake()
     {
         topic = GetComponent<TMP_Text>();
-        topic.text = PlayerPrefs.GetString("Topic");
-        
+              
         if(GameManager.instance.TWBenabled)
             EventManager.StartListening("UpdateTopic", UpdateTopic);
+        else
+            topic.text = PlayerPrefs.GetString("Topic");
     }
 
     private void UpdateTopic(string txt)

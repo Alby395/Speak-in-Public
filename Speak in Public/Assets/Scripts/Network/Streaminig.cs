@@ -9,7 +9,7 @@ public class Streaminig : MonoBehaviour
 {
     private Camera virtuCamera;
     private RenderTexture rendTexture;
-    private Texture2D streaming;
+    //private Texture2D streaming;
     private readonly int width = 480;
     private readonly int height = 360;
     private Coroutine stream;
@@ -19,27 +19,29 @@ public class Streaminig : MonoBehaviour
 
     private void Awake()
     {
-        virtuCamera = GetComponent<Camera>();
+        /*
+        virtuCamera = Camera.main;
 
         rendTexture = new RenderTexture(width, height, 24);
-        streaming = new Texture2D(width, height, TextureFormat.RGB24, false);
+        */
 
-        virtuCamera.aspect = width / height;
-        virtuCamera.targetTexture = rendTexture;
+        //streaming = new Texture2D(width, height, TextureFormat.RGB24, false);
+        
+        //virtuCamera.aspect = width / height;
 
         quality = PlayerPrefs.GetInt("QualityStreaming", 50);
-        fps = 4;
+        fps = 24;
     }
 
     private void Start()
     {
-        if (!GameManager.instance.TWBenabled)
+        if (GameManager.instance.TWBenabled)
         {
-            this.enabled = false;
+            stream = StartCoroutine(SendStreaming());
         }
         else
         {
-            stream = StartCoroutine(SendStreaming());
+            this.enabled = false;
         }
     }
 
@@ -53,24 +55,35 @@ public class Streaminig : MonoBehaviour
 
     IEnumerator SendStreaming()
     {
-        float rate = 1 / (float)fps;
+        float rate = 1f / (float)fps;
+
         while (WebSocketManager.instance.GetStatus() == WebSocketState.Open)
         {
-           SendFrame(false);
-           yield return new WaitForSeconds(rate);
+            yield return new WaitForEndOfFrame();
+            SendFrame(false);
+            yield return new WaitForSeconds(rate);
         }
     }
 
     public void SendFrame(bool important)
     {
+        /*
         virtuCamera.Render();
-
+        virtuCamera.targetTexture = rendTexture;
         RenderTexture.active = rendTexture;
         streaming.ReadPixels(new Rect(0, 0, width, height), 0, 0);
         streaming.Apply();
         RenderTexture.active = null;
+        virtuCamera.targetTexture = null;
+        */
+        Texture2D tex = ScreenCapture.CaptureScreenshotAsTexture();
+        
+        tex.Resize(width, height);
+        tex.Apply(false);
+        
+        string frame = Convert.ToBase64String(tex.EncodeToJPG(quality));
 
-        string frame = Convert.ToBase64String(streaming.EncodeToJPG(quality));
+        Destroy(tex);
 
         Streaming message = new Streaming();
         message.important = important;

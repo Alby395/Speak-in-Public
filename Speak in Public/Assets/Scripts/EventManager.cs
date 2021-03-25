@@ -12,7 +12,7 @@ public class EventManager : MonoBehaviour
     private static EventManager eventManager;
 
     public static EventManager instance
-    {
+    { 
         get
         {
             if (!eventManager)

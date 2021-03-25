@@ -6,7 +6,7 @@ public class DistractionManager : MonoBehaviour
 {
     [SerializeField] private Distraction[] distractions;
     [SerializeField] private GameObject darkBox;
-    [SerializeField] private float lightTime;
+    [SerializeField] private float lightTime = 0.25f;
 
     private Dictionary<string, AudioClip> audioDistraction;
     private AudioSource _audio;

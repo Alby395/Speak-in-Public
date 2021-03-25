@@ -8,6 +8,7 @@ public class PersonManager : MonoBehaviour
     public bool distractible;
 
     private Animator[] animators;
+    private Coroutine _cor;
 
     private bool isBusy;
 
@@ -30,6 +31,11 @@ public class PersonManager : MonoBehaviour
     private void OnDestroy()
     {
         EventManager.StopListening("StopCheering", Cheer);
+
+        if (GameManager.instance.TWBenabled)
+        {
+            EventManager.StopListening("Reset", Reset);
+        }
     }
 
     public void StartDistraction()
@@ -39,9 +45,10 @@ public class PersonManager : MonoBehaviour
     
     void DistractStandalone()
     {
-        StopCoroutine("Wait");
+        if(_cor != null)
+            StopCoroutine(_cor);
 
-        StartCoroutine(Wait());
+        _cor = StartCoroutine(Wait());
     }
 
     private IEnumerator Wait()

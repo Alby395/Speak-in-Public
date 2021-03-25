@@ -118,13 +118,11 @@ public class WebSocketManager : MonoBehaviour
         {
             Debug.Log("Chiusura WS");
             print(e.Reason);
-            debug.text += e.Reason;
         };
         ws.OnError += (sender, e) =>
         {
             Debug.Log("Errore WS");
             Debug.Log(e.Exception);
-            debug.text += "ERRORE";
         };
         ws.OnOpen += (sender, e) =>
         {

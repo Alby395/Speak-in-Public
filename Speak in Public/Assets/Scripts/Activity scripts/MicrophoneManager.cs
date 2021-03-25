@@ -14,7 +14,7 @@ public class MicrophoneManager : MonoBehaviour
     AudioClip _clipRecord;
     int _sampleWindow = 128;
 
-    void OnEnable()
+    private void Start()
     {
         if (_device == null)
             _device = Microphone.devices[0];
@@ -26,8 +26,8 @@ public class MicrophoneManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(MicrophoneCheck());
             StartMicrophone();
+            StartCoroutine(MicrophoneCheck());  
         }
     }
 
