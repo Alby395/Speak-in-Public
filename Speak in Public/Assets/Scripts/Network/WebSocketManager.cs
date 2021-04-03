@@ -5,6 +5,7 @@ using System;
 using UnityEngine.Networking;
 using System.IO;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class WebSocketManager : MonoBehaviour
 {
@@ -130,6 +131,28 @@ public class WebSocketManager : MonoBehaviour
             debug.text += "Aperto";
         };
         ws.Connect();
+    }
+    
+    public void SendAudio()
+    {
+        StartCoroutine(SendAudioCoroutine());
+        
+    }
+
+    private IEnumerator SendAudioCoroutine()
+    {
+        string urlAudio = url; //TODO completare
+        
+        List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
+        formData.Add(new MultipartFormFileSection("audio", File.ReadAllBytes(Application.persistentDataPath + "/Registration.wav")));
+        yield return null;
+
+        UnityWebRequest request = UnityWebRequest.Post(urlAudio, formData);
+        yield return request.SendWebRequest();
+
+        print(request.downloadHandler.text);
+
+        EventManager.TriggerEvent("Completed");
     }
 
     public WebSocketState GetStatus()

@@ -49,7 +49,8 @@ public class MicrophoneManager : MonoBehaviour
     {
         Microphone.End(_device);
         double time = _startTime.Subtract(DateTime.Now).TotalSeconds;
-
+        print(time);
+        
         int n = (int) (time + 1) * 44100 ;
 
         float[] samples = new float[n];
@@ -62,9 +63,7 @@ public class MicrophoneManager : MonoBehaviour
 
         SavWav.Save("Registration", newClip);
 
-        //TODO Aggiungere chiamata a server per salvataggio clip
-
-        EventManager.TriggerEvent("Completed");
+        WebSocketManager.instance.SendAudio();
     }
 
     
