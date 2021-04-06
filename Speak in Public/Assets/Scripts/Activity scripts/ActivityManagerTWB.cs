@@ -12,6 +12,9 @@ public class ActivityManagerTWB : ActivityManager
     private GameObject Topic;
     private string newTopic;
 
+    private Queue<Message> _messageQueue;
+
+
     protected override void Init()
     {
         EventManager.StartListening("Completed", EndSession);
@@ -20,6 +23,9 @@ public class ActivityManagerTWB : ActivityManager
         {
             WebSocketManager.instance.AddHandlerMessage(MessageHandler);
         }
+
+        _messageQueue = new Queue<Message>();
+        StartCoroutine(ManageMessage());  
     }
 
     private void OnDestroy()
@@ -34,86 +40,111 @@ public class ActivityManagerTWB : ActivityManager
     private void MessageHandler(object sender, MessageEventArgs e)
     {
         Message msg = JsonUtility.FromJson<Message>(e.Data);
-
-        print(msg);
         
-        //TODO Aggiungere gli altri messaggi
-        switch (msg.type) 
+        _messageQueue.Enqueue(msg);      
+    }
+
+    private IEnumerator ManageMessage()
+    {
+        do
         {
-            case "Start":
-                EventManager.TriggerEvent("StartRecording");
+            if(_messageQueue.Count > 0)
+            {
+                Message msg = _messageQueue.Dequeue();
+
+                switch (msg.type) 
+                {
+                    case "Start":
+                        EventManager.TriggerEvent("StartRecording");
+                        WebSocketManager.instance.SetAudioId(Int32.Parse(msg.id));
+                        break;
+
+                    case "Stop":
+                        EventManager.TriggerEvent("StartCheering");
+                        EventManager.TriggerEvent("StopRecording");
+                        break;
+                        
+                    case "Command":
+                        ParseCommand(msg);
+                        break;            
+
+                    default:
+                        Debug.Log("Unknown type of message");
+                        break;
+                }
+            }
+            yield return null;
+
+        }while(true);
+    }
+    private void ParseCommand(Message msg)
+    {
+        switch(msg.commandType)
+        {
+            case "distraction":
+                switch(msg.message)
+                {
+                    case "none":                            // Tutti attenti
+                        EventManager.TriggerEvent("Reset");
+                        break;
+
+                    case "one":                             // Uno distratto
+                        EventManager.TriggerEvent("Reset");
+                        int rng = UnityEngine.Random.Range(0, peopleManagers.Length);
+                        peopleManagers[rng].DistractTWB();
+                        break;
+
+                    case "half":                            // Metà distratti
+                        EventManager.TriggerEvent("Reset");
+                        System.Random rnd = new System.Random();
+                        peopleManagers = peopleManagers.OrderBy(x => rnd.Next()).ToArray();
+
+                        for(int i = 0; i < peopleManagers.Length/2; i++)
+                        {
+                            peopleManagers[i].DistractTWB();
+                        }
+                        break;
+
+                    case "all":                             // Tutti distratti
+                        EventManager.TriggerEvent("Reset");
+                        for(int i = 0; i < peopleManagers.Length; i++)
+                        {
+                            peopleManagers[i].DistractTWB();
+                        }
+                        break;
+                }
                 break;
 
-            case "Stop":
-                EventManager.TriggerEvent("StartCheering");
-                EventManager.TriggerEvent("StopRecording");
-                break;
-
-            case "End":
-                EventManager.TriggerEvent("Completed");
-                break;
-                
-            // Topic
-            case "Command":
+            case "topic":
                 EventManager.TriggerEvent("UpdateTopic", msg.message);
-                break;
+                break;   
 
-            // Distraction - People
-            case "Attention":
-                EventManager.TriggerEvent("Reset");
-                break;
-
-            case "Single":
-                EventManager.TriggerEvent("Reset");
-                int rng = UnityEngine.Random.Range(0, peopleManagers.Length);
-                peopleManagers[rng].StartDistraction();
-                break;
-
-            case "Partial":
-                EventManager.TriggerEvent("Reset");
-                System.Random rnd = new System.Random();
-                peopleManagers = peopleManagers.OrderBy(x => rnd.Next()).ToArray();
-
-                for(int i = 0; i < peopleManagers.Length/2; i++)
-                {
-                    peopleManagers[i].StartDistraction();
-                }
-                break;
-
-            case "Chaos":
-                EventManager.TriggerEvent("Reset");
-                for(int i = 0; i < peopleManagers.Length; i++)
-                {
-                    peopleManagers[i].StartDistraction();
-                }
-                break;
-
-            // Distraction - Audio
-            case "Audio":
-                EventManager.TriggerEvent("PlayDistraction", msg.message);
-                break;
-            
-            // Distraction - Light
-            case "Darkness":
+            case "light_distraction":
                 EventManager.TriggerEvent("Lights");
                 break;
 
+            case "audio_distraction":
+                EventManager.TriggerEvent("PlayDistraction", msg.message);
+                break;
+
             default:
-                Debug.Log("Unknown type of message");
+                print("No command");
                 break;
         }
     }
 
-
     private void EndSession()
     {
         StartCoroutine(ActivityTerminated());
+        StopCoroutine("ManageMessage");
     }
 
     [Serializable]
     private class Message
     {
         public string type;
+        public string commandType;
         public string message;
+        public string id;
     }
 }

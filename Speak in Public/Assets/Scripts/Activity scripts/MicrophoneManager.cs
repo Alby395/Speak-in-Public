@@ -43,26 +43,33 @@ public class MicrophoneManager : MonoBehaviour
     {
         _clipRecord = Microphone.Start(_device, false, 600, 44100);
         _startTime = DateTime.Now;
+        print(_startTime);
     }   
 
     void StopMicrophone()
     {
         Microphone.End(_device);
-        double time = _startTime.Subtract(DateTime.Now).TotalSeconds;
+
+        TimeSpan time = DateTime.Now.Subtract(_startTime);
+        print(time);
+        double seconds = time.TotalSeconds;
+
         print(time);
         
-        int n = (int) (time + 1) * 44100 ;
+        int n = (int) (seconds + 1) * 44100 ;
 
         float[] samples = new float[n];
 
         _clipRecord.GetData(samples, 0);
-
+        print("Creating new clip");
         AudioClip newClip = AudioClip.Create("Activity registration", n, _clipRecord.channels, _clipRecord.frequency, false);
 
+        print(Application.persistentDataPath);
         newClip.SetData(samples, 0);
 
+        print("Saving clip");
         SavWav.Save("Registration", newClip);
-
+        print("Clip saved");
         WebSocketManager.instance.SendAudio();
     }
 

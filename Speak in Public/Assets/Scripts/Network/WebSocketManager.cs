@@ -9,12 +9,12 @@ using System.Collections.Generic;
 
 public class WebSocketManager : MonoBehaviour
 {
-    public Text debug;
-
     [SerializeField] private TextAsset networkConfigurationFile;
 
     private int idSession;
     private int activityId;
+    private int _audioId;
+
     private WebSocket ws;
     private string url;
     private string urlReply;
@@ -38,7 +38,6 @@ public class WebSocketManager : MonoBehaviour
 
     public void StartWebSocket(int idSession)
     {
-        debug.text = "HERE\n";
         NetworkConfiguration config = JsonUtility.FromJson<NetworkConfiguration>(networkConfigurationFile.text);
 
         url = config.url;
@@ -59,13 +58,11 @@ public class WebSocketManager : MonoBehaviour
             ws.Close();
             ws = null;
         }
-        
     }
 
     IEnumerator GetActivityID()
     {
-        debug.text += "\nConnecting";
-        string urlTWB = "https://" + url + "configuration/" + idSession;
+        string urlTWB = "https://" + url + "/configuration/" + idSession;
         UnityWebRequest webRequest = UnityWebRequest.Get(urlTWB);
         Debug.Log(urlTWB);
         yield return webRequest.SendWebRequest();
@@ -86,7 +83,7 @@ public class WebSocketManager : MonoBehaviour
 
         yield return webRequestReply.SendWebRequest();
 
-        if (webRequestReply.isNetworkError)
+        if (webRequestReply.result == UnityWebRequest.Result.ConnectionError)
         {
             Debug.Log("Error Reply: " + webRequestReply.error);
             yield break;
@@ -102,7 +99,7 @@ public class WebSocketManager : MonoBehaviour
         */
         PlayerPrefs.SetInt("NumberOfPeople", 8);
         PlayerPrefs.SetInt("PercentageOfDistractedPeople", 0);
-        PlayerPrefs.SetInt("MicrophoneEnabled", 0);
+        PlayerPrefs.SetInt("MicrophoneEnabled", 1);
         PlayerPrefs.Save();
 
         StartWebSocket();
@@ -110,11 +107,11 @@ public class WebSocketManager : MonoBehaviour
 
     private void StartWebSocket()
     {
-        ws = new WebSocket("wss://" + url + "activity?activity=" + activityId + "&id=" + idSession);
+        ws = new WebSocket("wss://" + url + "/activity?activity=" + activityId + "&id=" + idSession);
         ws.SslConfiguration.EnabledSslProtocols = System.Security.Authentication.SslProtocols.Tls12;
 
-        print("wss://" + url + "activity?activity=" + activityId + "&id=" + idSession);
-        debug.text += "\nwss://" + url + "activity?activity=" + activityId + "&id=" + idSession + "\n";
+        print("wss://" + url + "/activity?activity=" + activityId + "&id=" + idSession);
+
         ws.OnClose += (sender, e) =>
         {
             Debug.Log("Chiusura WS");
@@ -128,7 +125,6 @@ public class WebSocketManager : MonoBehaviour
         ws.OnOpen += (sender, e) =>
         {
             Debug.Log("Aperto WS");
-            debug.text += "Aperto";
         };
         ws.Connect();
     }
@@ -136,18 +132,26 @@ public class WebSocketManager : MonoBehaviour
     public void SendAudio()
     {
         StartCoroutine(SendAudioCoroutine());
-        
+    }
+
+    public void SetAudioId(int id)
+    {
+        _audioId = id;
     }
 
     private IEnumerator SendAudioCoroutine()
     {
-        string urlAudio = url; //TODO completare
-        
-        List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
-        formData.Add(new MultipartFormFileSection("audio", File.ReadAllBytes(Application.persistentDataPath + "/Registration.wav")));
-        yield return null;
+        string urlAudio = "https://" + url + "/audio/" + _audioId; //TODO completare
 
+        print(urlAudio);
+
+        List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
+        formData.Add(new MultipartFormFileSection("audio", File.ReadAllBytes(Application.persistentDataPath + "/Registration.wav"), "Registration.wav", "audio/wav"));
+        print(formData[0].ToString());
+        yield return null;
+        
         UnityWebRequest request = UnityWebRequest.Post(urlAudio, formData);
+        print(request.GetRequestHeader("content-type"));
         yield return request.SendWebRequest();
 
         print(request.downloadHandler.text);

@@ -10392,6 +10392,20 @@ PrefabInstance:
       propertyPath: darkBox
       value: 
       objectReference: {fileID: 1502138492}
+    - target: {fileID: 1022114013, guid: 0a57d67af849709448c1ced60944d941, type: 3}
+      propertyPath: distractions.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1022114013, guid: 0a57d67af849709448c1ced60944d941, type: 3}
+      propertyPath: distractions.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 5dd60a72c83f3e24faa1f9a89aac750b,
+        type: 2}
+    - target: {fileID: 1022114013, guid: 0a57d67af849709448c1ced60944d941, type: 3}
+      propertyPath: distractions.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: e56ffee152b4887468dafed92ff742b5,
+        type: 2}
     - target: {fileID: 7460526765326359808, guid: 0a57d67af849709448c1ced60944d941,
         type: 3}
       propertyPath: m_Name

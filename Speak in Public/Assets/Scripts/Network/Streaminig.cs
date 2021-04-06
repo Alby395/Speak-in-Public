@@ -30,7 +30,7 @@ public class Streaminig : MonoBehaviour
         //virtuCamera.aspect = width / height;
 
         quality = PlayerPrefs.GetInt("QualityStreaming", 50);
-        fps = 24;
+        fps = 8;
     }
 
     private void Start()
@@ -60,12 +60,12 @@ public class Streaminig : MonoBehaviour
         while (WebSocketManager.instance.GetStatus() == WebSocketState.Open)
         {
             yield return new WaitForEndOfFrame();
-            SendFrame(false);
+            StartCoroutine(SendFrame(false));
             yield return new WaitForSeconds(rate);
         }
     }
 
-    public void SendFrame(bool important)
+    public IEnumerator SendFrame(bool important)
     {
         /*
         virtuCamera.Render();
@@ -77,13 +77,31 @@ public class Streaminig : MonoBehaviour
         virtuCamera.targetTexture = null;
         */
         Texture2D tex = ScreenCapture.CaptureScreenshotAsTexture();
-        
-        tex.Resize(width, height);
-        tex.Apply(false);
-        
+        /*
+        RenderTexture rt = new RenderTexture(width, height, 0);
+        RenderTexture.active = rt;
+
+        Graphics.Blit(tex, rt);
+
+        tex = new Texture2D(width, height);
+        tex.ReadPixels(new Rect(0, 0, width, height), 0, 0);
+        tex.Apply();
+     
         string frame = Convert.ToBase64String(tex.EncodeToJPG(quality));
 
-        Destroy(tex);
+        DestroyImmediate(tex);
+        DestroyImmediate(rt);
+        
+        yield return null;
+        TextureScale.Point(tex, width, height);
+        */
+        yield return null;
+        
+        TextureScaler.scale(tex, width, height, FilterMode.Point);
+
+        yield return null;
+
+        string frame = Convert.ToBase64String(tex.EncodeToJPG(quality));
 
         Streaming message = new Streaming();
         message.important = important;
@@ -93,6 +111,7 @@ public class Streaminig : MonoBehaviour
         message.data.height = height;
 
         WebSocketManager.instance.SendMessageWeb(JsonUtility.ToJson(message));
+
     }
 
     [Serializable]

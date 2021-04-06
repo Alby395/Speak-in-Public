@@ -15,7 +15,8 @@ public class SettingsInputForm : MonoBehaviour
         input = GetComponent<TMP_InputField>();
         input.text = PlayerPrefs.GetString(namePref, "");
 
-        input.onSelect.AddListener(ShowKeyboard);
+        if(!GameManager.instance.mobile)
+            input.onSelect.AddListener(ShowKeyboard);
     }
 
     public void SavePref()

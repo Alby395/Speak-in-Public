@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class DistractionManager : MonoBehaviour
 {
-    [SerializeField] private Distraction[] distractions;
+    [SerializeField] private DistractionList[] distractions;
     [SerializeField] private GameObject darkBox;
     [SerializeField] private float lightTime = 0.25f;
 
@@ -13,7 +13,7 @@ public class DistractionManager : MonoBehaviour
     private Material _mat;
     private float _alpha;
 
-    private bool _lightIsOn = false;
+    private bool _lightIsOn = true;
 
     // Start is called before the first frame update
     void Start()
@@ -24,9 +24,10 @@ public class DistractionManager : MonoBehaviour
 
         if(distractions.Length > 0)
         {
-            foreach(Distraction dis in distractions)
+            foreach(DistractionList list in distractions)
             {
-                audioDistraction.Add(dis.name, dis.audio);
+                foreach(Distraction dis in list.distractions)
+                    audioDistraction.Add(dis.name, dis.audio);
             }
 
             EventManager.StartListening("PlayDistraction", PlayAudio);
@@ -84,9 +85,7 @@ public class DistractionManager : MonoBehaviour
     }
 }
 
-[Serializable]
-public class Distraction
-{
-    public string name;
-    public AudioClip audio;
-}
+
+
+
+

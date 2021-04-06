@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.XR;
+using UnityEngine.XR.Management;
 
 public class GameManager : MonoBehaviour
 {
     public int gameId;
 
     public bool TWBenabled;
+
+    public bool mobile {get; private set;}
 
 	public static GameManager instance
 	{
@@ -20,8 +22,10 @@ public class GameManager : MonoBehaviour
 	{
 		if (instance == null)
 		{
+            instance = this;
+
             //Application.targetFrameRate = 45;
-			instance = this;
+            mobile = SceneManager.GetActiveScene().name.Contains("Mobile");
             gameId = 0;
 			DontDestroyOnLoad(gameObject);
 		}
@@ -45,7 +49,7 @@ public class GameManager : MonoBehaviour
                 GameManager.instance.gameId = 2;
                 break;
             
-            case "Doctor's office":
+            case "Doctor": //TODO cambiare nome
                 GameManager.instance.gameId = 3;
                 break;
 
@@ -53,14 +57,40 @@ public class GameManager : MonoBehaviour
                 GameManager.instance.gameId = 1;
                 break;
         }
-		
-        SceneManager.LoadSceneAsync(gameId);
+
+        if(mobile)
+        {
+            StartCoroutine(LoadXR());
+        }
+        else
+            SceneManager.LoadSceneAsync(gameId);
+    }
+
+    private IEnumerator LoadXR()
+    {
+        AsyncOperation handle = SceneManager.LoadSceneAsync(gameId);
+        handle.allowSceneActivation = false;
+
+        yield return XRGeneralSettings.Instance.Manager.InitializeLoader();
+
+        handle.allowSceneActivation = true;
+
+        XRGeneralSettings.Instance.Manager.StartSubsystems();
     }
 
     public void GoToMenu()
     {
-        gameId = 0;
-        SceneManager.LoadSceneAsync(gameId);
+        if(mobile)
+        {
+            SceneManager.LoadSceneAsync("MenuSceneMobile");
+            XRGeneralSettings.Instance.Manager.StopSubsystems();
+            XRGeneralSettings.Instance.Manager.DeinitializeLoader();
+        }
+        else
+        {
+            SceneManager.LoadSceneAsync("MenuScene");
+        }
+        
         WebSocketManager.instance.StopWebSocket();
     }
 

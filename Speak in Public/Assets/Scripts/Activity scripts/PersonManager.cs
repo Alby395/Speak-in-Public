@@ -40,7 +40,7 @@ public class PersonManager : MonoBehaviour
 
     public void StartDistraction()
     {
-        EventManager.StartListening("SpeechDetected", DistractStandalone);
+            EventManager.StartListening("SpeechDetected", DistractStandalone);
     }
     
     void DistractStandalone()
