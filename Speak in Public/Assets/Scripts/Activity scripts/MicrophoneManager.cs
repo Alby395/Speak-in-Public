@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.Audio;
@@ -16,18 +17,22 @@ public class MicrophoneManager : MonoBehaviour
 
     private void Start()
     {
-        if (_device == null)
+        if(Microphone.devices.Length > 0)
+        {
             _device = Microphone.devices[0];
-        
-        if(GameManager.instance.TWBenabled)
-        {
-            EventManager.StartListening("StartRecording", StartMicrophone);
-            EventManager.StartListening("StopRecording", StopMicrophone);
-        }
-        else
-        {
-            StartMicrophone();
+
+            if(GameManager.instance.TWBenabled)
+            {
+                EventManager.StartListening("StartRecording", StartMicrophone);
+                EventManager.StartListening("StopRecording", StopMicrophone);
+            }
+            else
+            {
+                StartMicrophone();
+                StartCoroutine(MicrophoneCheck());  
             StartCoroutine(MicrophoneCheck());  
+                StartCoroutine(MicrophoneCheck());  
+            }
         }
     }
 
@@ -41,7 +46,7 @@ public class MicrophoneManager : MonoBehaviour
 
     private void StartMicrophone()
     {
-        _clipRecord = Microphone.Start(_device, false, 600, 44100);
+        _clipRecord = Microphone.Start(_device, false, 900, 44100);
         _startTime = DateTime.Now;
         print(_startTime);
     }   

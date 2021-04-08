@@ -31,18 +31,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!114 &8995305650327411595
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 956089403926127952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2729c29305e8440fadecc58d0802980, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &9175233179422967048
 GameObject:
   m_ObjectHideFlags: 0
@@ -54,14 +42,14 @@ GameObject:
   - component: {fileID: 8945866531707997283}
   - component: {fileID: 7645212861070905611}
   - component: {fileID: 1692984376866319977}
-  - component: {fileID: 8301921274118258526}
+  - component: {fileID: 8529965564191250840}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Streaming Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8945866531707997283
 Transform:
   m_ObjectHideFlags: 0
@@ -101,7 +89,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 60
+  field of view: 40
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -112,8 +100,8 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
+  m_HDR: 0
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -150,7 +138,7 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!114 &8301921274118258526
+--- !u!114 &8529965564191250840
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -159,7 +147,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9175233179422967048}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2729c29305e8440fadecc58d0802980, type: 3}
+  m_Script: {fileID: 11500000, guid: 7df20116147f1fc4aad2e865c2133417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &3393130327711843689
@@ -169,6 +157,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2473149307203522387, guid: 3e9f4c3c73d15b44baf7f015a089d98a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2473149307311811648, guid: 3e9f4c3c73d15b44baf7f015a089d98a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2473149307311811652, guid: 3e9f4c3c73d15b44baf7f015a089d98a,
         type: 3}
       propertyPath: m_Enabled
@@ -242,6 +240,11 @@ PrefabInstance:
     - target: {fileID: 2473149309098827839, guid: 3e9f4c3c73d15b44baf7f015a089d98a,
         type: 3}
       propertyPath: m_Depth
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2622052995644884276, guid: 3e9f4c3c73d15b44baf7f015a089d98a,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:

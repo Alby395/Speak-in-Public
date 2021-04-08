@@ -3743,7 +3743,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0
@@ -6761,7 +6761,23 @@ PrefabInstance:
       propertyPath: m_TrackingOriginMode
       value: 2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8301921274118258526, guid: a37528f95aa40b04a871afddd292b863,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8995305650327411595, guid: a37528f95aa40b04a871afddd292b863,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9175233179422967048, guid: a37528f95aa40b04a871afddd292b863,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8301921274118258526, guid: a37528f95aa40b04a871afddd292b863, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a37528f95aa40b04a871afddd292b863, type: 3}
 --- !u!1 &3393130328886090356 stripped
 GameObject:

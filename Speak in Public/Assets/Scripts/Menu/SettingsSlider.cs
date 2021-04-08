@@ -13,7 +13,14 @@ public class SettingsSlider : MonoBehaviour
     private void Awake()
     {
         slider = GetComponent<UnityEngine.UI.Slider>();
-        slider.value = PlayerPrefs.GetInt(parameter);
+
+        int val = PlayerPrefs.GetInt(parameter, -1);
+        
+        if(val != -1)
+        {
+            slider.value = PlayerPrefs.GetInt(parameter, -1);
+        }
+
         value.text = slider.value.ToString();
         slider.onValueChanged.AddListener(ValueChange);
     }

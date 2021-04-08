@@ -4,8 +4,8 @@ using WebSocketSharp;
 using System;
 using UnityEngine.Networking;
 using System.IO;
-using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Threading;
 
 public class WebSocketManager : MonoBehaviour
 {
@@ -141,20 +141,19 @@ public class WebSocketManager : MonoBehaviour
 
     private IEnumerator SendAudioCoroutine()
     {
-        string urlAudio = "https://" + url + "/audio/" + _audioId; //TODO completare
-
+        string urlAudio = "https://" + url + "/audio/" + _audioId;
         print(urlAudio);
 
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
         formData.Add(new MultipartFormFileSection("audio", File.ReadAllBytes(Application.persistentDataPath + "/Registration.wav"), "Registration.wav", "audio/wav"));
-        print(formData[0].ToString());
         yield return null;
         
         UnityWebRequest request = UnityWebRequest.Post(urlAudio, formData);
-        print(request.GetRequestHeader("content-type"));
+
         yield return request.SendWebRequest();
 
         print(request.downloadHandler.text);
+
 
         EventManager.TriggerEvent("Completed");
     }
@@ -231,14 +230,14 @@ public class ConfigurationDetail
     public float PercentageOfDistractedPeople;
     public bool MicrophoneEnabled;
     public int id_activity;     //TODO Aggiungere caricamento scena corretta
-    public string Topic;
+    public string Location;     //TODO controllare vero nome di questo campo
 
     public void Setup()
     {
         PlayerPrefs.SetInt("NumberOfPeople", NumberOfPeople);
-        PlayerPrefs.SetInt("PercentageOfDistractedPeople", Mathf.FloorToInt(PercentageOfDistractedPeople));
-        PlayerPrefs.SetInt("MicrophoneEnabled", MicrophoneEnabled ? 1 : 0);
-        PlayerPrefs.SetString("Topic", Topic);
+        PlayerPrefs.SetInt("MicrophoneEnabled", 1);
+        PlayerPrefs.SetString("Topic", "");
+        PlayerPrefs.SetString("Location", Location);
         PlayerPrefs.Save();
     }
 }

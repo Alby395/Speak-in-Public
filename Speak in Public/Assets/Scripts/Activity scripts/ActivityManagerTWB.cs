@@ -48,7 +48,7 @@ public class ActivityManagerTWB : ActivityManager
     {
         do
         {
-            if(_messageQueue.Count > 0)
+            while(_messageQueue.Count > 0)
             {
                 Message msg = _messageQueue.Dequeue();
 
@@ -72,11 +72,14 @@ public class ActivityManagerTWB : ActivityManager
                         Debug.Log("Unknown type of message");
                         break;
                 }
+                yield return null;
             }
-            yield return null;
+
+            yield return new WaitForSeconds(0.5f);
 
         }while(true);
     }
+    
     private void ParseCommand(Message msg)
     {
         switch(msg.commandType)
