@@ -69,7 +69,7 @@ public abstract class ActivityManager : MonoBehaviour
 
     protected IEnumerator ActivityTerminated()
     {
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(12f);
         GameManager.instance.GoToMenu();
     }
 }

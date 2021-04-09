@@ -129,9 +129,9 @@ public class WebSocketManager : MonoBehaviour
         ws.Connect();
     }
     
-    public void SendAudio()
+    public void SendAudio(Thread ts)
     {
-        StartCoroutine(SendAudioCoroutine());
+        StartCoroutine(SendAudioCoroutine(ts));
     }
 
     public void SetAudioId(int id)
@@ -139,11 +139,17 @@ public class WebSocketManager : MonoBehaviour
         _audioId = id;
     }
 
-    private IEnumerator SendAudioCoroutine()
+    private IEnumerator SendAudioCoroutine(Thread ts)
     {
         string urlAudio = "https://" + url + "/audio/" + _audioId;
         print(urlAudio);
 
+        while(ts.IsAlive)
+        {
+            print("waiting");
+            yield return null;
+        }
+        
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
         formData.Add(new MultipartFormFileSection("audio", File.ReadAllBytes(Application.persistentDataPath + "/Registration.wav"), "Registration.wav", "audio/wav"));
         yield return null;
@@ -153,7 +159,6 @@ public class WebSocketManager : MonoBehaviour
         yield return request.SendWebRequest();
 
         print(request.downloadHandler.text);
-
 
         EventManager.TriggerEvent("Completed");
     }

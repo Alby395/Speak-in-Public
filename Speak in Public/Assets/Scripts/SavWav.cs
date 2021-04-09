@@ -25,6 +25,7 @@
 //  http://forum.unity3d.com/threads/119295-Writing-AudioListener.GetOutputData-to-wav-problem?p=806734&viewfull=1#post806734
 
 using System;
+using System.Threading;
 using System.IO;
 using UnityEngine;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ public static class SavWav {
 
 	const int HEADER_SIZE = 44;
 
-	public static bool Save(string filename, AudioClip clip) {
+	public static Thread Save(string filename, AudioClip clip) {
 		if (!filename.ToLower().EndsWith(".wav")) {
 			filename += ".wav";
 		}
@@ -45,14 +46,25 @@ public static class SavWav {
 		// Make sure directory exists if user is saving to sub dir.
 		Directory.CreateDirectory(Path.GetDirectoryName(filepath));
 
-		using (var fileStream = CreateEmpty(filepath)) {
+		var samples = new float[clip.samples];
+		clip.GetData(samples, 0);
+		int hz = clip.frequency;
+		int channels = clip.channels;
+		int samplesAmount = clip.samples;
 
-			ConvertAndWrite(fileStream, clip);
+		Thread ts = new Thread(
+			new ThreadStart(() => {
+				using (var fileStream = CreateEmpty(filepath)) {
 
-			WriteHeader(fileStream, clip);
-		}
+					ConvertAndWrite(fileStream, samples);
 
-		return true; // TODO: return false if there's a failure saving the file
+					WriteHeader(fileStream, hz, channels, samplesAmount);
+				}
+		}));
+		
+		ts.Start();
+
+		return ts;
 	}
 
 	public static AudioClip TrimSilence(AudioClip clip, float min) {
@@ -105,12 +117,8 @@ public static class SavWav {
 		return fileStream;
 	}
 
-	static void ConvertAndWrite(FileStream fileStream, AudioClip clip) {
-
-		var samples = new float[clip.samples];
-
-		clip.GetData(samples, 0);
-
+	static void ConvertAndWrite(FileStream fileStream, float[] samples)
+	{
 		Int16[] intData = new Int16[samples.Length];
 		//converting in 2 float[] steps to Int16[], //then Int16[] to Byte[]
 
@@ -130,12 +138,8 @@ public static class SavWav {
 		fileStream.Write(bytesData, 0, bytesData.Length);
 	}
 
-	static void WriteHeader(FileStream fileStream, AudioClip clip) {
-
-		var hz = clip.frequency;
-		var channels = clip.channels;
-		var samples = clip.samples;
-
+	static void WriteHeader(FileStream fileStream, int hz, int channels, int samples)
+	{
 		fileStream.Seek(0, SeekOrigin.Begin);
 
 		Byte[] riff = System.Text.Encoding.UTF8.GetBytes("RIFF");

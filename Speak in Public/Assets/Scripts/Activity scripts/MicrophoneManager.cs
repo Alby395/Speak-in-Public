@@ -29,9 +29,7 @@ public class MicrophoneManager : MonoBehaviour
             else
             {
                 StartMicrophone();
-                StartCoroutine(MicrophoneCheck());  
-            StartCoroutine(MicrophoneCheck());  
-                StartCoroutine(MicrophoneCheck());  
+                StartCoroutine(MicrophoneCheck());   
             }
         }
     }
@@ -54,28 +52,29 @@ public class MicrophoneManager : MonoBehaviour
     void StopMicrophone()
     {
         Microphone.End(_device);
+        if(GameManager.instance.TWBenabled)
+        {
+            TimeSpan time = DateTime.Now.Subtract(_startTime);
+            print(time);
+            double seconds = time.TotalSeconds;
 
-        TimeSpan time = DateTime.Now.Subtract(_startTime);
-        print(time);
-        double seconds = time.TotalSeconds;
+            print(time);
+            
+            int n = (int) (seconds + 1) * 44100 ;
 
-        print(time);
-        
-        int n = (int) (seconds + 1) * 44100 ;
+            float[] samples = new float[n];
 
-        float[] samples = new float[n];
+            _clipRecord.GetData(samples, 0);
+            print("Creating new clip");
+            AudioClip newClip = AudioClip.Create("Activity registration", n, _clipRecord.channels, _clipRecord.frequency, false);
 
-        _clipRecord.GetData(samples, 0);
-        print("Creating new clip");
-        AudioClip newClip = AudioClip.Create("Activity registration", n, _clipRecord.channels, _clipRecord.frequency, false);
+            print(Application.persistentDataPath);
+            newClip.SetData(samples, 0);
 
-        print(Application.persistentDataPath);
-        newClip.SetData(samples, 0);
+            print("Saving clip");
 
-        print("Saving clip");
-        SavWav.Save("Registration", newClip);
-        print("Clip saved");
-        WebSocketManager.instance.SendAudio();
+            WebSocketManager.instance.SendAudio(SavWav.Save("Registration", newClip));
+        }
     }
 
     

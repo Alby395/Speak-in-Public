@@ -22,7 +22,8 @@ public class StreamingWithCamera : MonoBehaviour
     private void Awake()
     {
         virtuCamera = GetComponent<Camera>();
-
+        virtuCamera.aspect = width/height;
+        
         rendTexture = new RenderTexture(width, height, 24);
         virtuCamera.targetTexture = rendTexture;
 

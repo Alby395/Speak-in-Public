@@ -34,6 +34,7 @@ public class DistractionManager : MonoBehaviour
         }
         
         EventManager.StartListening("Lights", TurnLight);
+        EventManager.StartListening("Completed", FadeCompleted);
 
         _mat = darkBox.GetComponent<MeshRenderer>().material;
         _alpha = _mat.color.a;
@@ -82,6 +83,30 @@ public class DistractionManager : MonoBehaviour
             darkBox.gameObject.SetActive(true);
 
         _lightIsOn = !_lightIsOn;
+    }
+
+    private void FadeCompleted()
+    {
+        StartCoroutine(FadeOut());
+    }
+
+    private IEnumerator FadeOut()
+    {
+        float time = 0;
+        float maxTime = 7f;
+
+        while(time < maxTime)
+        {
+            time += Time.deltaTime;
+
+            Color col = _mat.color;
+            col.a = time/maxTime;
+
+            _mat.color = col;
+
+            yield return null;
+        }
+
     }
 }
 
