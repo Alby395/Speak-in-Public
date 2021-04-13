@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     {
 		string scene = PlayerPrefs.GetString("Location", "");
 
+        //TODO Decidere nomi
         switch(scene)
         {
             case "School":
@@ -49,10 +50,17 @@ public class GameManager : MonoBehaviour
                 GameManager.instance.gameId = 2;
                 break;
             
-            case "Doctor": //TODO cambiare nome
+            case "Doctor": 
                 GameManager.instance.gameId = 3;
                 break;
 
+            case "Work":
+                GameManager.instance.gameId = 4;
+                break;
+            
+            case "OneTable":
+                GameManager.instance.gameId = 5;
+                break;
             default:
                 GameManager.instance.gameId = 1;
                 break;

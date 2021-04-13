@@ -11,20 +11,13 @@ using TMPro;
 
 public abstract class ActivityManager : MonoBehaviour
 {
-    private int NumberOfPeople;
-    protected float PercentageOfDistractedPeople;
+    
     private bool MicrophoneEnabled;
 
     public GameObject TextTopic;
     public GameObject people;
     
     protected PersonManager[] peopleManagers;
-
-    public static ActivityManager instance
-    {
-        get;
-        private set;
-    }
 
     public virtual void Awake()
     {
@@ -41,31 +34,9 @@ public abstract class ActivityManager : MonoBehaviour
             {
                 Destroy(this);
             }
+            GetComponent<MicrophoneManager>().enabled = (PlayerPrefs.GetInt("MicrophoneEnabled") == 0) ? false : true;
         }
-
-        GetComponent<MicrophoneManager>().enabled = (PlayerPrefs.GetInt("MicrophoneEnabled") == 0) ? false : true;
     }
-
-    // Start is called before the first frame update
-    public virtual void Start()
-    {
-        System.Random rnd = new System.Random();
-        
-        peopleManagers = people.GetComponentsInChildren<PersonManager>().OrderBy(x => rnd.Next()).ToArray();
-
-        NumberOfPeople = Math.Min(peopleManagers.Length, PlayerPrefs.GetInt("NumberOfPeople"));
-
-        for (int i = 0; i < peopleManagers.Length - NumberOfPeople; i++)
-        {
-            Destroy(peopleManagers[i].gameObject);
-        }
-
-        peopleManagers = peopleManagers.OrderBy(x => rnd.Next()).ToArray();
-
-        Init();
-    }
-
-    protected abstract void Init();
 
     protected IEnumerator ActivityTerminated()
     {

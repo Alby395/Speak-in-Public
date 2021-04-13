@@ -15,7 +15,7 @@ public class ActivityManagerTWB : ActivityManager
     private Queue<Message> _messageQueue;
 
 
-    protected override void Init()
+    private void Start()
     {
         EventManager.StartListening("Completed", EndSession);
 
@@ -62,6 +62,7 @@ public class ActivityManagerTWB : ActivityManager
                     case "Stop":
                         EventManager.TriggerEvent("StartCheering");
                         EventManager.TriggerEvent("StopRecording");
+                        EventManager.TriggerEvent("PlayDistraction", "clap");
                         break;
                         
                     case "Command":
