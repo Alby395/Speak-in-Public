@@ -37,16 +37,17 @@ public class GameManager : MonoBehaviour
 
     public void LoadLevel()
     {
+        print("TWB? " + TWBenabled);
+
 		string scene = PlayerPrefs.GetString("Location", "");
 
-        //TODO Decidere nomi
         switch(scene)
         {
             case "School":
                 GameManager.instance.gameId = 1;
                 break;
             
-            case "Restaurant":
+            case "Bar":
                 GameManager.instance.gameId = 2;
                 break;
             
@@ -61,6 +62,7 @@ public class GameManager : MonoBehaviour
             case "OneTable":
                 GameManager.instance.gameId = 5;
                 break;
+
             default:
                 GameManager.instance.gameId = 1;
                 break;
@@ -88,6 +90,7 @@ public class GameManager : MonoBehaviour
 
     public void GoToMenu()
     {
+        TWBenabled = false;
         if(mobile)
         {
             SceneManager.LoadSceneAsync("MenuSceneMobile");

@@ -42,6 +42,8 @@ public class ActivityManagerStandalone : ActivityManager
         yield return new WaitForSeconds(ActivityDuration * 60f);
         
         EventManager.TriggerEvent("StartCheering");
+        EventManager.TriggerEvent("PlayDistraction", "clap");
+
         StartCoroutine(ActivityTerminated());
     }
 }

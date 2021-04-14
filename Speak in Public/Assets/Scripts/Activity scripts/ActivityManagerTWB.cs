@@ -17,6 +17,9 @@ public class ActivityManagerTWB : ActivityManager
 
     private void Start()
     {
+        System.Random rnd = new System.Random();
+        peopleManagers = people.GetComponentsInChildren<PersonManager>().OrderBy(x => rnd.Next()).ToArray();
+
         EventManager.StartListening("Completed", EndSession);
 
         if (WebSocketManager.instance.GetStatus() == WebSocketState.Open)
@@ -40,7 +43,7 @@ public class ActivityManagerTWB : ActivityManager
     private void MessageHandler(object sender, MessageEventArgs e)
     {
         Message msg = JsonUtility.FromJson<Message>(e.Data);
-        
+        print(JsonUtility.ToJson(msg));
         _messageQueue.Enqueue(msg);      
     }
 
@@ -78,7 +81,10 @@ public class ActivityManagerTWB : ActivityManager
 
             yield return new WaitForSeconds(0.5f);
 
-        }while(true);
+        }while(WebSocketManager.instance.GetStatus() == WebSocketSharp.WebSocketState.Open);
+
+        EventManager.TriggerEvent("StopRecording");
+        EventManager.TriggerEvent("StartCheering");
     }
     
     private void ParseCommand(Message msg)
@@ -139,6 +145,7 @@ public class ActivityManagerTWB : ActivityManager
 
     private void EndSession()
     {
+        EventManager.StopListening("Completed", EndSession);
         StartCoroutine(ActivityTerminated());
         StopCoroutine("ManageMessage");
     }

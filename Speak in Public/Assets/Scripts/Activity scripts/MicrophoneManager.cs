@@ -44,36 +44,37 @@ public class MicrophoneManager : MonoBehaviour
 
     private void StartMicrophone()
     {
-        _clipRecord = Microphone.Start(_device, false, 900, 44100);
+        _clipRecord = Microphone.Start(_device, false, PlayerPrefs.GetInt("ActivityDuration") * 60 + 1, 44100);
         _startTime = DateTime.Now;
-        print(_startTime);
     }   
 
     void StopMicrophone()
     {
-        Microphone.End(_device);
-        if(GameManager.instance.TWBenabled)
+        EventManager.StopListening("StopRecording", StopMicrophone);
+        
+        if(Microphone.IsRecording(_device))
         {
-            TimeSpan time = DateTime.Now.Subtract(_startTime);
-            print(time);
-            double seconds = time.TotalSeconds;
+            Microphone.End(_device);
 
-            print(time);
+            TimeSpan time = DateTime.Now.Subtract(_startTime);
+            double seconds = time.TotalSeconds;
             
             int n = (int) (seconds + 1) * 44100 ;
 
             float[] samples = new float[n];
 
             _clipRecord.GetData(samples, 0);
-            print("Creating new clip");
             AudioClip newClip = AudioClip.Create("Activity registration", n, _clipRecord.channels, _clipRecord.frequency, false);
 
             print(Application.persistentDataPath);
             newClip.SetData(samples, 0);
-
-            print("Saving clip");
+            print("Saving audio");
 
             WebSocketManager.instance.SendAudio(SavWav.Save("Registration", newClip));
+        }
+        else
+        {
+            EventManager.TriggerEvent("Completed");
         }
     }
 
@@ -100,7 +101,6 @@ public class MicrophoneManager : MonoBehaviour
         }
         return levelMax;
     }
-
 
     private IEnumerator MicrophoneCheck()
     {

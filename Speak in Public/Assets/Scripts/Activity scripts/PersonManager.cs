@@ -30,7 +30,7 @@ public class PersonManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        EventManager.StopListening("StopCheering", Cheer);
+        EventManager.StopListening("StartCheering", Cheer);
 
         if (GameManager.instance.TWBenabled)
         {

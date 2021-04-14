@@ -88,6 +88,7 @@ public class DistractionManager : MonoBehaviour
     private void FadeCompleted()
     {
         StartCoroutine(FadeOut());
+        EventManager.StopListening("Completed", FadeCompleted);
     }
 
     private IEnumerator FadeOut()

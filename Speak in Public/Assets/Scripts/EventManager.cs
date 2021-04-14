@@ -36,7 +36,6 @@ public class EventManager : MonoBehaviour
     {
         if (eventDictionary == null)
         {
-            DontDestroyOnLoad(gameObject);
             eventDictionary = new Dictionary<string, UnityEvent>();
             eventParamDictionary = new Dictionary<string, UnityEventString>();
         }

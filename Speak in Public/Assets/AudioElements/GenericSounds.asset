@@ -23,3 +23,7 @@ MonoBehaviour:
     audio: {fileID: 8300000, guid: 5e921cad4ccda4b429ed10c1d7f1f87b, type: 3}
   - name: door
     audio: {fileID: 8300000, guid: ce516c6aa5e8716409b33f6df558ea0a, type: 3}
+  - name: door2
+    audio: {fileID: 8300000, guid: 6d98ae46b4b2d094bbeb4206d22def6c, type: 3}
+  - name: knock
+    audio: {fileID: 8300000, guid: 831c6a805501c62409a959c2162fe311, type: 3}

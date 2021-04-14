@@ -29,5 +29,4 @@ public class Menu : MonoBehaviour
     {
         GameManager.instance.TWBenabled = enable;
     }
-
 }

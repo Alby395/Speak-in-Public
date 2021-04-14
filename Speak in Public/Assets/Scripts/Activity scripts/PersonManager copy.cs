@@ -25,7 +25,7 @@ public class PersonManagerBefore : MonoBehaviour
     private void OnDestroy()
     {
 
-        EventManager.StopListening("StopCheering", Cheer);
+        EventManager.StopListening("StartCheering", Cheer);
     }
 
     public void SetDistract()
@@ -54,9 +54,8 @@ public class PersonManagerBefore : MonoBehaviour
 
     private IEnumerator Wait()
     {
-        print("WAIT");
         Random.InitState(System.DateTime.Now.Millisecond);
-        //Debug.Log((float)new System.Random().NextDouble());
+
         yield return new WaitForSeconds((float)new System.Random().NextDouble());
 
         Distract();

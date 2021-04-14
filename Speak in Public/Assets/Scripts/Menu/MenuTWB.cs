@@ -13,9 +13,14 @@ public class MenuTWB : Menu
     public GameObject StartButton;
     private Button startButton;
 
+    [SerializeField] private Button _connectButton;
+
     void Awake()
     {
         startButton = StartButton.GetComponent<Button>();
+
+        _connectButton.onClick.AddListener(StartConnection);
+        startButton.onClick.AddListener(GameManager.instance.LoadLevel);
     }
 
     void Update()
@@ -25,6 +30,8 @@ public class MenuTWB : Menu
 
     public void StartConnection()
     {
+        print("Starting connection");
+
         int session = int.Parse(sessionId.text);
         WebSocketManager.instance.StartWebSocket(session);
     }

@@ -64,7 +64,7 @@ public class WebSocketManager : MonoBehaviour
     {
         string urlTWB = "https://" + url + "/configuration/" + idSession;
         UnityWebRequest webRequest = UnityWebRequest.Get(urlTWB);
-        Debug.Log(urlTWB);
+        
         yield return webRequest.SendWebRequest();
 
         if (webRequest.isNetworkError)
@@ -74,34 +74,25 @@ public class WebSocketManager : MonoBehaviour
         }
 
         string res = webRequest.downloadHandler.text;
-        Debug.Log("Received: " + res);
-        
 
         activityId = JsonUtility.FromJson<Response>(res).id;
-        /*
-        UnityWebRequest webRequestReply = UnityWebRequest.Get(Path.Combine(urlReply + activityId));
+        
+        string urlReply = "https://" + url + "/act/" + activityId;
+
+        UnityWebRequest webRequestReply = UnityWebRequest.Get(urlReply);
 
         yield return webRequestReply.SendWebRequest();
 
-        if (webRequestReply.result == UnityWebRequest.Result.ConnectionError)
+        if (webRequestReply.isNetworkError)
         {
             Debug.Log("Error Reply: " + webRequestReply.error);
             yield break;
         }
 
         string resReply = webRequestReply.downloadHandler.text;
-        Debug.Log("Received: " + resReply);
 
-        ConfigurationDetail det = JsonUtility.FromJson<ResponseReply>(resReply).configuration.configuration;
-        GameManager.instance.gameId = det.id_activity;  //TODO Aggiungere caricamento scena corretta
-
-        det.Setup();
-        */
-        PlayerPrefs.SetInt("NumberOfPeople", 8);
-        PlayerPrefs.SetInt("PercentageOfDistractedPeople", 0);
-        PlayerPrefs.SetInt("MicrophoneEnabled", 1);
-        PlayerPrefs.Save();
-
+        JsonUtility.FromJson<ResponseReply>(resReply).configuration.Setup();
+        
         StartWebSocket();
     }
 
@@ -110,17 +101,17 @@ public class WebSocketManager : MonoBehaviour
         ws = new WebSocket("wss://" + url + "/activity?activity=" + activityId + "&id=" + idSession);
         ws.SslConfiguration.EnabledSslProtocols = System.Security.Authentication.SslProtocols.Tls12;
 
-        print("wss://" + url + "/activity?activity=" + activityId + "&id=" + idSession);
-
         ws.OnClose += (sender, e) =>
         {
             Debug.Log("Chiusura WS");
             print(e.Reason);
+            ws.Close();
         };
         ws.OnError += (sender, e) =>
         {
             Debug.Log("Errore WS");
             Debug.Log(e.Exception);
+            ws = null;
         };
         ws.OnOpen += (sender, e) =>
         {
@@ -142,25 +133,27 @@ public class WebSocketManager : MonoBehaviour
     private IEnumerator SendAudioCoroutine(Thread ts)
     {
         string urlAudio = "https://" + url + "/audio/" + _audioId;
-        print(urlAudio);
 
         while(ts.IsAlive)
         {
-            print("waiting");
             yield return null;
         }
-        
+
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
         formData.Add(new MultipartFormFileSection("audio", File.ReadAllBytes(Application.persistentDataPath + "/Registration.wav"), "Registration.wav", "audio/wav"));
         yield return null;
         
         UnityWebRequest request = UnityWebRequest.Post(urlAudio, formData);
 
+        print("Sending audio");
         yield return request.SendWebRequest();
+        print("Audio sent");
 
-        print(request.downloadHandler.text);
 
         EventManager.TriggerEvent("Completed");
+
+        Destroy(this.gameObject);
+
     }
 
     public WebSocketState GetStatus()
@@ -204,45 +197,37 @@ public class WebSocketManager : MonoBehaviour
     [Serializable]
     private class ResponseReply
     {
-        public int id;
-        public string value;
-        public string category;
-        public string description;
-        public bool active;
         public Configuration configuration;
     }
 
     [Serializable]
     private class Configuration
     {
-        public string name;
-        public string description;
-        public string category;
-        public string img;
-        public string url;
-        public int device_id;
-        public ConfigurationDetail configuration;
+        public string oculus_scene;
+        public int timer;
+        public void Setup()
+        {
+            PlayerPrefs.SetInt("MicrophoneEnabled", 1);
+            PlayerPrefs.SetString("Topic", "");
+            PlayerPrefs.SetString("Location", oculus_scene);
+            print("time: " + timer);
+            PlayerPrefs.SetInt("ActivityDuration", timer);
+            PlayerPrefs.Save();
+        }
     }
-
-   
-
 }
 
 [Serializable]
 public class ConfigurationDetail
 {
-    public int NumberOfPeople;
-    public float PercentageOfDistractedPeople;
-    public bool MicrophoneEnabled;
-    public int id_activity;     //TODO Aggiungere caricamento scena corretta
+    public string oculusScene;     //TODO Aggiungere caricamento scena corretta
     public string Location;     //TODO controllare vero nome di questo campo
 
     public void Setup()
     {
-        PlayerPrefs.SetInt("NumberOfPeople", NumberOfPeople);
         PlayerPrefs.SetInt("MicrophoneEnabled", 1);
         PlayerPrefs.SetString("Topic", "");
-        PlayerPrefs.SetString("Location", Location);
+        PlayerPrefs.SetString("Location", oculusScene);
         PlayerPrefs.Save();
     }
 }
